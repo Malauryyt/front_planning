@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from "../components/navbar.js";
+import Connexion from "../components/connexion";
 
 
 export function TableauDeBord(props) {
 
-    // var user = ""
-    // if (sessionStorage.getItem("user") != null) {
-    //     user = JSON.parse(sessionStorage.user);
-    // }
+    var user = ""
+    if (sessionStorage.getItem("user") != null) {
+        //user = JSON.parse(sessionStorage.user);
+        console.log("Dans ma session :");
+        console.log(sessionStorage.user);
+    }
+
     return (<>
+
             <Navbar />
             <div className="container-md">
 
