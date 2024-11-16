@@ -2,6 +2,14 @@ header {
   height: 80px;
 }
 
+.conteneur{
+  margin-top : 40px;
+}
+
+.titre{
+  margin-top : 10px;
+  margin-bottom: 10px;
+}
 
 /* ###################################################################################################################*/
 /* connexion */
@@ -40,4 +48,8 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.projetEncours{
+  margin-left : 5em;
 }

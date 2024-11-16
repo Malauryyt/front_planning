@@ -4,6 +4,7 @@ import {jwtDecode} from 'jwt-decode';
 
 import { TableauDeBord } from './tableauDeBord.js';
 import Connexion from "../components/connexion";
+import {ProjetRecap} from "./projetRecap";
 
 export default function Browser() {
 
@@ -11,7 +12,7 @@ export default function Browser() {
     useEffect(() => {
         sessionStorage.getItem("user") == null ?
             sessionStorage.setItem("user", [user]) : setUser(sessionStorage.getItem("user"));
-    })
+    }, [user]);
 
     const initUser = (user) => {
 
@@ -21,7 +22,6 @@ export default function Browser() {
 
         console.log("dans le browser " + user.login)
     };
-
 
     // gestion du token
     const [token, setToken] = useState("");
@@ -38,11 +38,9 @@ export default function Browser() {
         const token = sessionStorage.getItem('token');
 
         if (token && isTokenValid(token)) {
-            console.log("mon token est valide")
             return token;
         }else{
             sessionStorage.removeItem('token');
-            console.log("mon token est pas valide")
             return null;
         }
 
@@ -72,7 +70,6 @@ export default function Browser() {
             if (!token) {
                 window.location.href = '/connexion';
             }
-            console.log("ma gestion de token")
         }, []);
     };
 
@@ -82,11 +79,14 @@ export default function Browser() {
     const [projet, setProjet] = useState(0);
 
 
+
     return (<>
             <BrowserRouter>
                 <Routes>
                     <Route path='/' element={<TableauDeBord user={user} projet={projet} setProjet={setProjet}/>} />
                     <Route path='/connexion' element={<Connexion user={user} setUser={initUser}  />} />
+                    <Route path='/projet' element={<ProjetRecap user={user} setUser={initUser}  projet={projet} setProjet={setProjet} />} />
+
                 </Routes>
             </BrowserRouter>
         </>

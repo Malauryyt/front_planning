@@ -29,10 +29,11 @@ function Connexion(props) {
                 else{
                     //console.log(" je regarde dans mon login" + data)
 
-                    console.log("mon token" ,   sessionStorage.getItem('token'))
+                    console.log("Dan sma connexion data : " ,   data)
+                     props.setUser(data)
+                     console.log("mon user" ,  props.user);
+                    // console.log(sessionStorage.user)
 
-                    props.setUser(data)
-                    console.log(sessionStorage.user)
                     redirectToAboutPage()
                 }
             } catch (error) {

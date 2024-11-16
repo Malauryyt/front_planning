@@ -1,31 +1,111 @@
 import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {getMine, getOneprojet, getProjetsSuivit} from '../model/projet.js'
 
 function Navbar(props) {
 
-    var tabProjet =
+    var user
+    if (sessionStorage.getItem("user") != null) {
+        user = JSON.parse(sessionStorage.user);
+    }
+    else{
+        user = ""
+    }
+
+    const [error , setError] = useState("");
+    const [projets, setProjets] = useState([]);
+    const [projetSuivi, setProjetSuivi] = useState([]);
+    const[projetEncours, setProjetEncours] = useState("Tous les projets");
+
+    // liste de projet dans la navbar
     useEffect(() => {
+        getMineProject();
+        getProjetsSuivitProject();
 
+    }, [user.id_user]);
 
-    }, [props.projet]);
+    // titre de mon projet en cours
+    useEffect( ()=> {
+
+        if( props.projetEnCours != 0){
+            changeNavBarProjet(props.projetEnCours)
+        }
+        else{
+            setProjetEncours("Tous les projets");
+        }
+
+    }, [props.projetEnCours]);
+
+    const getMineProject = async () => {
+
+        try {
+            const data = await getMine(user.id_user);
+            if(data == "400"){
+                console.log("data/error : ", data.status);
+                setError("Impossible de récupérer les projets" )
+            }
+            else{
+                setProjets(data) ;
+            }
+        } catch (error) {
+            console.error("Erreur lors de la récupération des projets :", error);
+        }
+
+    }
+    const getProjetsSuivitProject = async () => {
+
+        try {
+            const data = await getProjetsSuivit(user.id_user);
+            if(data == "400"){
+                console.log("data/error : ", data.status);
+                setError("Impossible de récupérer les projets" )
+            }
+            else{
+                setProjetSuivi(data) ;
+            }
+        } catch (error) {
+            console.error("Erreur lors de la récupération des projets suivit :", error);
+        }
+
+    }
+
+    const changeProjet = async(id) =>{
+        props.setProjetEnCours(id);
+    }
+
+    const changeNavBarProjet = async(id) =>{
+        try{
+            const data = await getOneprojet(id);
+            if(data == "400"){
+                console.log("data/error : ", data.status);
+                setError("Impossible de récupérer les projets" )
+            }
+            else{
+                setProjetEncours(data.libelle);
+            }
+
+        }
+        catch{
+            console.error("Erreur lors de la récupération d'un projet :", error);
+        }
+    };
 
 
     return (<>
 
-            <nav className="navbar navbar-expand-lg bg-body-tertiary">
+            <nav className="navbar navbar-expand-lg bg-body-tertiary shadow-sm">
                 <div className="container-fluid">
-                    <a className="navbar-brand" href="#">AppPlanning</a>
-                    <FontAwesomeIcon icon="fa-regular fa-calendar-days" />
+                    <a className="navbar-brand" href="/">AppPlanning</a>
+                    <FontAwesomeIcon icon="fa-regular fa-calendar-days" onClick={getMineProject}/>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                        <ul className="navbar-nav me-auto mb-2 mb-lg-0 px-3">
                             <li className="nav-item">
-                                <a className="nav-link" href="/">Projets</a>
+                                <a className="nav-link" href="/projet">Projets</a>
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link" href="/taches">Taches</a>
@@ -33,14 +113,26 @@ function Navbar(props) {
                             <li className="nav-item">
                                 <a className="nav-link" href="/plannings">Plannings</a>
                             </li>
-                            <li className="nav-item dropdown">
+
+                            <li className="projetEncours nav-item dropdown ">
                                 <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                    aria-expanded="false">
-                                    Projets choisit
+                                    {projetEncours}
                                 </a>
+
                                 <ul className="dropdown-menu">
-                                    <li><a className="dropdown-item" href="#">Action</a></li>
-                                    <li><a className="dropdown-item" href="#">Another action</a></li>
+                                    <li ><a className="dropdown-item" href="#" onClick={() => { changeProjet(0) }}>Tous les projets </a></li>
+                                    {projets.length > 0 && projets.map((projet, cpt) => {
+                                        return (
+                                            <li ><a className="dropdown-item" href="#" onClick={() => { changeProjet(projet.id_projet) }}>{projet.libelle} - {projet.trigramme}</a></li>
+                                        )
+                                    })}
+                                    {projetSuivi.length > 0 && projetSuivi.map((projet, cpt) => {
+                                        return (
+                                            <li ><a className="dropdown-item" href="#" onClick={() => { changeProjet(projet.id_projet) }}>{projet.libelle} - {projet.trigramme}</a></li>
+                                        )
+                                    })}
+
                                     <li>
                                         <hr className="dropdown-divider"></hr>
                                     </li>

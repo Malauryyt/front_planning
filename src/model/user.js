@@ -25,16 +25,16 @@ export async function connexionApi(user, mdp) {
                     return data
                 }else{
                     // on met le token en session
-                    console.log(data);
+                    console.log("Mes datas : ", data);
                     sessionStorage.setItem("token", data.token);
 
                     const decodedToken = jwtDecode(data.token);
-                    console.log(decodedToken)
+                    console.log("Token décodé :" , decodedToken)
 
-                    const user = decodedToken.id_user
-                    const tab = {"id_user": user.id_user, "login": user.login , "droit": user.droit }
-
-                    return tab;
+                    // const user = decodedToken.id_user
+                    // const tab = {"id_user": user.id_user, "login": user.login , "droit": user.droit }
+                    //id_user, login, droit, trigramme
+                    return decodedToken;
                 }
 
             });
