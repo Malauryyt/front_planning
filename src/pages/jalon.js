@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from "../components/navbar.js";
-import Projets from "../components/projets"
+
 import Planning from "../components/planning"
 import Connexion from "../components/connexion";
 
