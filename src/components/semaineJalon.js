@@ -28,10 +28,12 @@ function Semaine(props) {
 
 
     useEffect( ()=>{
+
         setDateDuCalendrier(getDaysinCalendars(props.annee, props.mois ))
-        const today = new Date();
-        setaujourdhui(today.getDate());
         setCalendrier(props.calendrier)
+
+        const today = new Date();
+        setaujourdhui(today.toISOString().split('T')[0]);
 
         const test = props.calendrier
         console.log(test)
@@ -46,14 +48,15 @@ function Semaine(props) {
 
     const daysOfWeekOrder = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
+
     return (<>
 
-        <  tr>
-            <td className={aujourdhui == calendrier.Monday[props.index] ? "day today" : "day "}>
+        <tr>
+            <td className={ new Date(aujourdhui).getTime() == new Date(dateDuCalendrier.Monday[props.index]).getTime() ? "day today" : "day "} onClick={ () => {props.setDateAjout(dateDuCalendrier.Monday[props.index])}} data-bs-toggle="modal" data-bs-target="#exampleModal">
                 <span className="number"> {calendrier.Monday[props.index]} </span>
 
                 {jalons.length > 0 && jalons.map((jalon, cpt) => {
-                    console.log(dateDuCalendrier)
+
                     const dateFinJalon =   jalon.date_liv_theorique;
                     const dateDebJalon = jalon.date_com_theorique ;
                     const dateAct = dateDuCalendrier.Monday[props.index]
@@ -80,8 +83,8 @@ function Semaine(props) {
                             <span className={isBetween ? "event event-multiday" : "d-none"} style={{ backgroundColor: jalon.couleur }} c></span>
                             <span className={estDebut ? "event event-multiday-start eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
                             <span className={estFin ? "event event-multiday-finish eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className="event" className={jalon.charge == 1  ? "event" : "d-none"} style={{ backgroundColor: '#bd32ce ' }} ></span>
-                            <span className="event" className={jalon.charge == 1  ? "event" : "d-none"} style={{ backgroundColor: '#bd32ce ' }} ></span>
+                            <span className="event" className={jalon.charge == 1  ? "event" : "d-none"} style={{ backgroundColor: jalon.couleur  }} ></span>
+                            <span className="event" className={jalon.charge == 1  ? "event" : "d-none"} style={{ backgroundColor: jalon.couleur  }} ></span>
                         </>
                     )
 

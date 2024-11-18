@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {getJalons} from '../model/jalon.js'
 import Semaine from "./semaineJalon";
+import JalonCrud from "./jalonCRUD"
 
 
 function Planning(props) {
+    const [dateAjout, setDateAjout] = useState("");
 
     const today = new Date();
     const monthName = new Intl.DateTimeFormat('fr-FR', { month: 'long' }).format(today);
@@ -32,11 +34,6 @@ function Planning(props) {
 
 
     }, [annee, mois])
-
-    // useEffect( ()=>{
-    //     setCalendrier(getCalendarDays(2024, 10 )); // Génère les jours du mois
-    //
-    // }, [])
 
     // récupération de mes jalons selon le projets choisis
     useEffect( ()=>{
@@ -141,13 +138,13 @@ function Planning(props) {
             <div className="planning">
 
                 <div className="d-flex justify-content-between">
-                    <div>
-                        <FontAwesomeIcon icon="fa-solid fa-arrow-left" onClick={moisAnte} />
+                    <div >
+                        <FontAwesomeIcon icon="fa-solid fa-arrow-left" onClick={moisAnte} className="pointer"/>
                     </div>
                     <div >
-                        <h3> {nomMois} - {annee} - {mois} </h3>
+                        <h3> {nomMois} - {annee}  </h3>
                     </div>
-                    <div> <FontAwesomeIcon icon="fa-solid fa-arrow-right" onClick={moisPrece} /> </div>
+                    <div > <FontAwesomeIcon icon="fa-solid fa-arrow-right" onClick={moisPrece} className="pointer"/> </div>
                 </div>
 
                 <table className="">
@@ -163,18 +160,28 @@ function Planning(props) {
                     {Object.entries(calendrier).length > 0 && Array.from({ length: 6 }).map((_, index) => {
 
                             return (
-
                                 <>
-                                    <Semaine calendrier={calendrier} index={index} jalons={jalons} mois={mois} annee={annee}/>
-
+                                    <Semaine calendrier={calendrier} index={index} jalons={jalons} mois={mois} annee={annee} setDateAjout={setDateAjout}/>
                                 </>
-
                             )
                         }
 
                     )}
                 </table>
+                <div className="d-flex justify-content-around">
+                {jalons.length > 0 && jalons.map((jalon, cpt) => {
+                    return (<>
+                            <div className="d-flex "><div className="legende" style={{ backgroundColor: jalon.couleur }}> </div> {jalon.libelle} </div>
+
+                        </>
+                            )
+
+
+                } )}
+                </div>
             </div>
+
+            <JalonCrud setDateAjout={setDateAjout} dateAjout={dateAjout}/>
 
         </>
     )

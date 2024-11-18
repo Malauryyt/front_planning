@@ -11,6 +11,10 @@ header {
   margin-bottom: 10px;
 }
 
+.pointer:hover{
+  cursor : pointer;
+}
+
 /* ###################################################################################################################*/
 /* connexion */
 /* ###################################################################################################################*/
@@ -96,3 +100,18 @@ header {
 .planning span.event-multiday-finish { margin-left: -4px;  }
 
 .planning span.event-ghost { background-color:transparent; }
+
+
+.legende{
+  width : 15px;
+  height: 15px;
+  margin : 6px;
+  border-radius: 50%;
+}
+
+.AjoutJalon{
+}
+.AjoutJalon:hover{
+  font-weight: bold;
+  cursor: pointer;
+}
