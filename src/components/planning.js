@@ -6,17 +6,37 @@ import Semaine from "./semaineJalon";
 
 function Planning(props) {
 
+    const today = new Date();
+    const monthName = new Intl.DateTimeFormat('fr-FR', { month: 'long' }).format(today);
+
     const [error, setError] = useState({});
     const [calendrier, setCalendrier] = useState({});
+
     const[dateDuCalendrier, setDateDuCalendrier ] = useState({});
+
     const [jalons, setJalon] = useState([]);
+    const [mois, setMois] = useState(today.getMonth() );
+    const [annee, setAnnee] = useState(today.getFullYear());
+    const[nomMois, setNomMois] = useState(monthName);
 
 
     useEffect( ()=>{
-        setCalendrier(getCalendarDays(2024, 10)); // Génère les jours du mois
-        console.log("mise à jour de mon calendrier")
+        console.log("Je regarde mon calendrier pour le " ,  mois)
+        setCalendrier(getCalendarDays(annee, mois )); // Génère les jours du mois
 
-    }, [])
+        const date = new Date(new Date().getFullYear(), mois);
+
+        setNomMois(Intl.DateTimeFormat('fr-FR', { month: 'long' }).format(date) ) ;
+        console.log("mise à jour de mon calendrier")
+        console.log(mois)
+
+
+    }, [annee, mois])
+
+    // useEffect( ()=>{
+    //     setCalendrier(getCalendarDays(2024, 10 )); // Génère les jours du mois
+    //
+    // }, [])
 
     // récupération de mes jalons selon le projets choisis
     useEffect( ()=>{
@@ -51,6 +71,32 @@ function Planning(props) {
 
 
     }
+
+    const moisAnte = () => {
+        console.log("je supprime un mois")
+        if (mois === 0) {
+            // Si on est en Janvier, on passe à Décembre de l'année précédente
+            setMois(11); // Décembre
+            setAnnee(annee - 1);
+        } else {
+            // Sinon, on décrémente simplement le mois
+            setMois(mois - 1);
+        }
+    };
+
+    // Fonction pour aller au mois suivant (Bonus)
+    const moisPrece = () => {
+        console.log("j'ajoute un mois")
+        if (mois === 11) {
+            // Si on est en Décembre, on passe à Janvier de l'année suivante
+            setMois(0); // Janvier
+            setAnnee(annee + 1);
+        } else {
+            // Sinon, on incrémente simplement le mois
+            setMois(mois + 1);
+        }
+    };
+
 
     return (<>
 
@@ -92,10 +138,19 @@ function Planning(props) {
 
             )}
 
-
             <div className="planning">
 
-                <table>
+                <div className="d-flex justify-content-between">
+                    <div>
+                        <FontAwesomeIcon icon="fa-solid fa-arrow-left" onClick={moisAnte} />
+                    </div>
+                    <div >
+                        <h3> {nomMois} - {annee} - {mois} </h3>
+                    </div>
+                    <div> <FontAwesomeIcon icon="fa-solid fa-arrow-right" onClick={moisPrece} /> </div>
+                </div>
+
+                <table className="">
                     <tr>
                         <th className="day-name">Lundi</th>
                         <th className="day-name">Mardi</th>
@@ -110,83 +165,14 @@ function Planning(props) {
                             return (
 
                                 <>
-                                    <Semaine calendrier={calendrier} index={index}/>
+                                    <Semaine calendrier={calendrier} index={index} jalons={jalons} mois={mois} annee={annee}/>
 
                                 </>
-
 
                             )
                         }
 
                     )}
-                    <tr>
-                        <td className="day"><span className="number">31</span></td>
-                        <td className="day"><span className="number">1</span><span className="event"></span><span
-                            className="event"></span></td>
-                        <td className="day"><span className="number">2</span></td>
-                        <td className="day"><span className="number">3</span><span
-                            className="event event-multiday-start"></span></td>
-                        <td className="day"><span className="number">4</span>
-                            <span className="event event-multiday"></span>
-                            <span className="event event-multiday-start eventclass" style={{ backgroundColor: '#5a9ab2' }} ></span>
-                            <span className="event" style={{ backgroundColor: '#bd32ce ' }} ></span>
-                        </td>
-                        <td className="day"><span className="number">5</span><span
-                            className="event event-multiday-finish"></span>
-                            <span className="event event-multiday eventclass"
-                                                                                 style={{ backgroundColor: '#5a9ab2' }}></span>
-                        </td>
-                        <td className="day"><span className="number">6</span><span className="event event-ghost"></span><span
-                            className="event event-multiday-finish eventclass" style={{ backgroundColor: '#5a9ab2' }}></span></td>
-                    </tr>
-                    <tr>
-                        <td className="day"><span className="number">7</span></td>
-                        <td className="day"><span className="number">8</span><span className="event"></span></td>
-                        <td className="day"><span className="number">9</span></td>
-                        <td className="day"><span className="number">10</span></td>
-                        <td className="day"><span className="number">11</span></td>
-                        <td className="day"><span className="number">12</span></td>
-                        <td className="day"><span className="number">13</span></td>
-                    </tr>
-                    <tr>
-                        <td className="day"><span className="number">14</span></td>
-                        <td className="day"><span className="number">15</span></td>
-                        <td className="day"><span className="number">16</span><span className="event"></span></td>
-                        <td className="day"><span className="number">17</span><span className="event"></span></td>
-                        <td className="day"><span className="number">18</span></td>
-                        <td className="day"><span className="number">19</span></td>
-                        <td className="day"><span className="number">20</span></td>
-                    </tr>
-                    <tr>
-                        <td className="day"><span className="number">21</span></td>
-                        <td className="day"><span className="number">22</span></td>
-                        <td className="day"><span className="number">23</span></td>
-                        <td className="day"><span className="number">24</span></td>
-                        <td className="day"><span className="number">25</span></td>
-                        <td className="day"><span className="number">26</span></td>
-                        <td className="day"><span className="number">27</span><span className="event event-multiday-start"
-                                                                                    style={{ backgroundColor: '#5a9ab2' }}></span></td>
-                    </tr>
-                    <tr>
-                        <td className="day"><span className="number">28</span><span className="event event-multiday"
-                                                                                    style={{ backgroundColor: '#5a9ab2' }}></span></td>
-                        <td className="day today"><span className="number">29</span><span
-                            className="event event-multiday-finish" style={{ backgroundColor: '#5a9ab2' }}></span></td>
-                        <td className="day"><span className="number">30</span></td>
-                        <td className="day"><span className="number">1</span></td>
-                        <td className="day"><span className="number">2</span></td>
-                        <td className="day"><span className="number">3</span></td>
-                        <td className="day"><span className="number">4</span></td>
-                    </tr>
-                    <tr>
-                        <td className="day"><span className="number">5</span></td>
-                        <td className="day"><span className="number">6</span><span className="event"></span></td>
-                        <td className="day"><span className="number">7</span></td>
-                        <td className="day"><span className="number">8</span></td>
-                        <td className="day"><span className="number">9</span></td>
-                        <td className="day"><span className="number">10</span></td>
-                        <td className="day"><span className="number">11</span></td>
-                    </tr>
                 </table>
             </div>
 
@@ -214,7 +200,6 @@ function getCalendarDays(year, month) {
     let firstDayOfWeek = new Date(year, month, 1).getDay();
 
     // Ajuster pour que la semaine commence par lundi
-    // Si `firstDayOfWeek` est `0` (Dimanche), on le convertit en `7` pour qu'il devienne après `Lundi` = 1
     if (firstDayOfWeek === 0) {
         firstDayOfWeek = 7;
     }
@@ -222,53 +207,50 @@ function getCalendarDays(year, month) {
     // Fonction pour mapper le jour (1 = Lundi) aux jours de la semaine
     const mapDayToWeek = (day) => {
         switch (day) {
-            case 1:
-                return "Monday";
-            case 2:
-                return "Tuesday";
-            case 3:
-                return "Wednesday";
-            case 4:
-                return "Thursday";
-            case 5:
-                return "Friday";
-            case 6:
-                return "Saturday";
-            case 7:
-                return "Sunday";
-            default:
-                return null;
+            case 1: return "Monday";
+            case 2: return "Tuesday";
+            case 3: return "Wednesday";
+            case 4: return "Thursday";
+            case 5: return "Friday";
+            case 6: return "Saturday";
+            case 7: return "Sunday";
+            default: return null;
         }
     };
 
     // Ajouter les jours du mois précédent s'il ne commence pas un Lundi
     if (firstDayOfWeek !== 1) {
-        const previousMonthDays = new Date(year, month, 0).getDate(); // Dernier jour du mois précédent
+        let previousMonthDays = new Date(year, month, 0).getDate(); // Dernier jour du mois précédent
         for (let i = firstDayOfWeek - 1; i >= 1; i--) {
             const dayOfWeek = mapDayToWeek(i);
-            daysOfWeek[dayOfWeek].unshift(previousMonthDays - (firstDayOfWeek - 1) + (i - 1));
+            // Ajouter les jours du mois précédent avec padding "01", "02", etc.
+            daysOfWeek[dayOfWeek].unshift(String(previousMonthDays).padStart(2, '0'));
+            previousMonthDays--; // Décrémenter après utilisation
         }
     }
 
     // Ajouter les jours du mois actuel
     for (let day = 1; day <= daysInMonth; day++) {
-        const dayOfWeek = mapDayToWeek(new Date(year, month, day).getDay() || 7); // `getDay()` renvoie 0 pour dimanche, on le remplace par 7
-        daysOfWeek[dayOfWeek].push(day);
+        const dayOfWeek = mapDayToWeek(new Date(year, month, day).getDay() || 7);
+        daysOfWeek[dayOfWeek].push(String(day).padStart(2, '0'));
     }
 
     // Compléter avec les jours du mois suivant si nécessaire pour remplir jusqu'à 6 lignes complètes
     const totalDays = Object.values(daysOfWeek).reduce((acc, days) => acc + days.length, 0);
-    const remainingDays = 42 - totalDays; // Pour remplir un tableau complet de 6 semaines (42 cases)
+    const remainingDays = 42 - totalDays;
 
     if (remainingDays > 0) {
         for (let i = 1; i <= remainingDays; i++) {
-            const dayOfWeek = mapDayToWeek(new Date(year, month + 1, i).getDay() || 7); // `getDay()` renvoie 0 pour dimanche, on le remplace par 7
-            daysOfWeek[dayOfWeek].push(i);
+            const dayOfWeek = mapDayToWeek(new Date(year, month + 1, i).getDay() || 7);
+            daysOfWeek[dayOfWeek].push(String(i).padStart(2, '0'));
         }
     }
 
     return daysOfWeek;
 }
+
+
+
 
 
 export default Planning;
