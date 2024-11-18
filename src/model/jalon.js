@@ -28,3 +28,37 @@ export async function getJalons(id_projet) {
     }
 
 }
+
+export async function creaPosteMachine(id_projet, libelle, dateLivPrev, dateCommencement, id_user, couleur) {
+    try{
+        return fetch(route +"jalon/crea", {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+
+                "libelle" : libelle,
+                "dateLivPrev": dateLivPrev,
+                "dateCommencement": dateCommencement,
+                "id_projet": id_projet,
+                "id_user" : id_user,
+                "couleur" : couleur
+
+            })
+        })
+            // la on transforme en json
+            .then(
+                res =>{
+                    return res.status
+                }
+            )
+            .then(data => {
+                // console.log(data);
+                return data;
+            });
+        // ce then la return la reponse
+    }
+    catch(error){
+        return "j'ai une erreur" +  error
+    }
+
+}

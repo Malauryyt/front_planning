@@ -35,9 +35,6 @@ function Semaine(props) {
         const today = new Date();
         setaujourdhui(today.toISOString().split('T')[0]);
 
-        const test = props.calendrier
-        console.log(test)
-
     }, [props.calendrier])
 
     //mise à jour de mon jalon
@@ -52,21 +49,24 @@ function Semaine(props) {
     return (<>
 
         <tr>
-            <td className={ new Date(aujourdhui).getTime() == new Date(dateDuCalendrier.Monday[props.index]).getTime() ? "day today" : "day "} onClick={ () => {props.setDateAjout(dateDuCalendrier.Monday[props.index])}} data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <td className={ new Date(aujourdhui).getTime() == new Date(dateDuCalendrier.Monday[props.index]).getTime() ? "day today" : "day "}
+                onClick={ () => {props.setDateAjout(dateDuCalendrier.Monday[props.index])}} data-bs-toggle="modal" data-bs-target="#ajoutModal">
                 <span className="number"> {calendrier.Monday[props.index]} </span>
 
                 {jalons.length > 0 && jalons.map((jalon, cpt) => {
 
-                    const dateFinJalon =   jalon.date_liv_theorique;
-                    const dateDebJalon = jalon.date_com_theorique ;
-                    const dateAct = dateDuCalendrier.Monday[props.index]
+                    var dateFinJalon =   jalon.date_liv_theorique;
+                    var dateDebJalon = jalon.date_com_theorique ;
+                    var dateAct = dateDuCalendrier.Monday[props.index]
+                    console.log(dateDuCalendrier)
+                    console.log(props.index)
 
                     // Vérifier si la date du jalon est entre deux dates
-
-                    const isBetween =
-                        new Date(dateAct) > new Date(dateDebJalon) &&
-                        new Date(dateAct) < new Date(dateFinJalon);
-
+                    var isBetween = false ;
+                    if(new Date(dateAct).getTime() > new Date(dateDebJalon).getTime() &&
+                        new Date(dateAct).getTime() < new Date(dateFinJalon).getTime() ){
+                        isBetween = true ;
+                    }
 
                     var estDebut = false;
                     if(new Date(dateDebJalon).getTime() ===  new Date(dateAct).getTime()){
@@ -80,11 +80,11 @@ function Semaine(props) {
                     return (
                         <>
 
-                            <span className={isBetween ? "event event-multiday" : "d-none"} style={{ backgroundColor: jalon.couleur }} c></span>
-                            <span className={estDebut ? "event event-multiday-start eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className={estFin ? "event event-multiday-finish eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className="event" className={jalon.charge == 1  ? "event" : "d-none"} style={{ backgroundColor: jalon.couleur  }} ></span>
-                            <span className="event" className={jalon.charge == 1  ? "event" : "d-none"} style={{ backgroundColor: jalon.couleur  }} ></span>
+                            <span className={isBetween ? "event event-multiday" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
+                            <span className={estDebut === true ? "event event-multiday-start eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
+                            <span className={estFin === true ? "event event-multiday-finish eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
+                            <span className="event" className={jalon.charge == 1 && isBetween ? "event" : "d-none"} style={{ backgroundColor: jalon.couleur  }} ></span>
+
                         </>
                     )
 
@@ -92,7 +92,8 @@ function Semaine(props) {
 
 
             </td>
-            <td className={aujourdhui == calendrier.Tuesday[props.index] ? "day today" : "day"}>
+            <td className={aujourdhui == calendrier.Tuesday[props.index] ? "day today" : "day"}
+                onClick={ () => {props.setDateAjout(dateDuCalendrier.Tuesday[props.index])}} data-bs-toggle="modal" data-bs-target="#ajoutModal">
                 <span className="number">{calendrier.Tuesday[props.index]}</span>
 
                 {jalons.length > 0 && jalons.map((jalon, cpt) => {
@@ -102,11 +103,11 @@ function Semaine(props) {
                     const dateAct = dateDuCalendrier.Tuesday[props.index]
 
                     // Vérifier si la date du jalon est entre deux dates
-
-                    const isBetween =
-                        new Date(dateAct) > new Date(dateDebJalon) &&
-                        new Date(dateAct) < new Date(dateFinJalon);
-
+                    var isBetween = false ;
+                    if(new Date(dateAct).getTime() > new Date(dateDebJalon).getTime() &&
+                        new Date(dateAct).getTime() < new Date(dateFinJalon).getTime() ){
+                        isBetween = true ;
+                    }
 
                     var estDebut = false;
                     if(new Date(dateDebJalon).getTime() ===  new Date(dateAct).getTime()){
@@ -119,18 +120,20 @@ function Semaine(props) {
 
                     return (
                         <>
-                            <span className={isBetween ? "event event-multiday" : "d-none"} style={{ backgroundColor: jalon.couleur }} c></span>
-                            <span className={estDebut ? "event event-multiday-start eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className={estFin ? "event event-multiday-finish eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className="event" className={jalon.charge == 1  ? "event" : "d-none"} style={{ backgroundColor: '#bd32ce ' }} ></span>
-                            <span className="event" className={jalon.charge == 1  ? "event" : "d-none"} style={{ backgroundColor: '#bd32ce ' }} ></span>
+
+                            <span className={isBetween ? "event event-multiday" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
+                            <span className={estDebut === true ? "event event-multiday-start eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
+                            <span className={estFin === true ? "event event-multiday-finish eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
+                            <span className="event" className={jalon.charge == 1 && isBetween ? "event" : "d-none"} style={{ backgroundColor: jalon.couleur  }} ></span>
+
                         </>
                     )
 
                 })}
 
             </td>
-            <td className={aujourdhui == calendrier.Wednesday[props.index] ? "day today" : "day"}>
+            <td className={aujourdhui == calendrier.Wednesday[props.index] ? "day today" : "day"}
+                onClick={ () => {props.setDateAjout(dateDuCalendrier.Wednesday[props.index])}} data-bs-toggle="modal" data-bs-target="#ajoutModal">
                 <span className="number"> {calendrier.Wednesday[props.index]}</span>
 
                 {jalons.length > 0 && jalons.map((jalon, cpt) => {
@@ -140,11 +143,11 @@ function Semaine(props) {
                     const dateAct = dateDuCalendrier.Wednesday[props.index]
 
                     // Vérifier si la date du jalon est entre deux dates
-
-                    const isBetween =
-                        new Date(dateAct) > new Date(dateDebJalon) &&
-                        new Date(dateAct) < new Date(dateFinJalon);
-
+                    var isBetween = false ;
+                    if(new Date(dateAct).getTime() > new Date(dateDebJalon).getTime() &&
+                        new Date(dateAct).getTime() < new Date(dateFinJalon).getTime() ){
+                        isBetween = true ;
+                    }
 
                     var estDebut = false;
                     if(new Date(dateDebJalon).getTime() ===  new Date(dateAct).getTime()){
@@ -158,18 +161,19 @@ function Semaine(props) {
                     return (
                         <>
 
-                            <span className={isBetween ? "event event-multiday" : "d-none"} style={{ backgroundColor: jalon.couleur }} c></span>
-                            <span className={estDebut ? "event event-multiday-start eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className={estFin ? "event event-multiday-finish eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className="event" className={jalon.charge == 1  ? "event" : "d-none"} style={{ backgroundColor: '#bd32ce ' }} ></span>
-                            <span className="event" className={jalon.charge == 1  ? "event" : "d-none"} style={{ backgroundColor: '#bd32ce ' }} ></span>
+                            <span className={isBetween ? "event event-multiday" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
+                            <span className={estDebut === true ? "event event-multiday-start eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
+                            <span className={estFin === true ? "event event-multiday-finish eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
+                            <span className="event" className={jalon.charge == 1 && isBetween ? "event" : "d-none"} style={{ backgroundColor: jalon.couleur  }} ></span>
+
                         </>
                     )
 
                 })}
 
             </td>
-            <td className={aujourdhui == calendrier.Thursday[props.index] ? "day today" : "day"}>
+            <td className={aujourdhui == calendrier.Thursday[props.index] ? "day today" : "day"}
+                onClick={ () => {props.setDateAjout(dateDuCalendrier.Thursday[props.index])}} data-bs-toggle="modal" data-bs-target="#ajoutModal">
                 <span className="number"> {calendrier.Thursday[props.index]}</span>
 
                 {jalons.length > 0 && jalons.map((jalon, cpt) => {
@@ -179,11 +183,11 @@ function Semaine(props) {
                     const dateAct = dateDuCalendrier.Thursday[props.index]
 
                     // Vérifier si la date du jalon est entre deux dates
-
-                    const isBetween =
-                        new Date(dateAct) > new Date(dateDebJalon) &&
-                        new Date(dateAct) < new Date(dateFinJalon);
-
+                    var isBetween = false ;
+                    if(new Date(dateAct).getTime() > new Date(dateDebJalon).getTime() &&
+                        new Date(dateAct).getTime() < new Date(dateFinJalon).getTime() ){
+                        isBetween = true ;
+                    }
 
                     var estDebut = false;
                     if(new Date(dateDebJalon).getTime() ===  new Date(dateAct).getTime()){
@@ -196,18 +200,20 @@ function Semaine(props) {
 
                     return (
                         <>
-                            <span className={isBetween ? "event event-multiday" : "d-none"} style={{ backgroundColor: jalon.couleur }} c></span>
-                            <span className={estDebut ? "event event-multiday-start eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className={estFin ? "event event-multiday-finish eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className="event" className={jalon.charge == 1  ? "event" : "d-none"} style={{ backgroundColor: '#bd32ce ' }} ></span>
-                            <span className="event" className={jalon.charge == 1  ? "event" : "d-none"} style={{ backgroundColor: '#bd32ce ' }} ></span>
+
+                            <span className={isBetween ? "event event-multiday" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
+                            <span className={estDebut === true ? "event event-multiday-start eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
+                            <span className={estFin === true ? "event event-multiday-finish eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
+                            <span className="event" className={jalon.charge == 1 && isBetween ? "event" : "d-none"} style={{ backgroundColor: jalon.couleur  }} ></span>
+
                         </>
                     )
 
                 })}
 
             </td>
-            <td  className={aujourdhui == calendrier.Friday[props.index] ? "day today" : "day"}>
+            <td  className={aujourdhui == calendrier.Friday[props.index] ? "day today" : "day"}
+                 onClick={ () => {props.setDateAjout(dateDuCalendrier.Friday[props.index])}} data-bs-toggle="modal" data-bs-target="#ajoutModal">
                 <span className="number"> {calendrier.Friday[props.index]}</span>
 
                 {jalons.length > 0 && jalons.map((jalon, cpt) => {
@@ -217,11 +223,11 @@ function Semaine(props) {
                     const dateAct = dateDuCalendrier.Friday[props.index]
 
                     // Vérifier si la date du jalon est entre deux dates
-
-                    const isBetween =
-                        new Date(dateAct) > new Date(dateDebJalon) &&
-                        new Date(dateAct) < new Date(dateFinJalon);
-
+                    var isBetween = false ;
+                    if(new Date(dateAct).getTime() > new Date(dateDebJalon).getTime() &&
+                        new Date(dateAct).getTime() < new Date(dateFinJalon).getTime() ){
+                        isBetween = true ;
+                    }
 
                     var estDebut = false;
                     if(new Date(dateDebJalon).getTime() ===  new Date(dateAct).getTime()){
@@ -235,18 +241,19 @@ function Semaine(props) {
                     return (
                         <>
 
-                            <span className={isBetween ? "event event-multiday" : "d-none"} style={{ backgroundColor: jalon.couleur }} c></span>
-                            <span className={estDebut ? "event event-multiday-start eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className={estFin ? "event event-multiday-finish eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className="event" className={jalon.charge == 1  ? "event" : "d-none"} style={{ backgroundColor: '#bd32ce ' }} ></span>
-                            <span className="event" className={jalon.charge == 1  ? "event" : "d-none"} style={{ backgroundColor: '#bd32ce ' }} ></span>
+                            <span className={isBetween ? "event event-multiday" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
+                            <span className={estDebut === true ? "event event-multiday-start eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
+                            <span className={estFin === true ? "event event-multiday-finish eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
+                            <span className="event" className={jalon.charge == 1 && isBetween ? "event" : "d-none"} style={{ backgroundColor: jalon.couleur  }} ></span>
+
                         </>
                     )
 
                 })}
 
             </td>
-            <td className={aujourdhui == calendrier.Saturday[props.index] ? "day today" : "day"}>
+            <td className={aujourdhui == calendrier.Saturday[props.index] ? "day today" : "day"}
+                onClick={ () => {props.setDateAjout(dateDuCalendrier.Saturday[props.index])}} data-bs-toggle="modal" data-bs-target="#ajoutModal">
                 <span className="number"> {calendrier.Saturday[props.index]}</span>
 
                 {jalons.length > 0 && jalons.map((jalon, cpt) => {
@@ -256,11 +263,11 @@ function Semaine(props) {
                     const dateAct = dateDuCalendrier.Saturday[props.index]
 
                     // Vérifier si la date du jalon est entre deux dates
-
-                    const isBetween =
-                        new Date(dateAct) > new Date(dateDebJalon) &&
-                        new Date(dateAct) < new Date(dateFinJalon);
-
+                    var isBetween = false ;
+                    if(new Date(dateAct).getTime() > new Date(dateDebJalon).getTime() &&
+                        new Date(dateAct).getTime() < new Date(dateFinJalon).getTime() ){
+                        isBetween = true ;
+                    }
 
                     var estDebut = false;
                     if(new Date(dateDebJalon).getTime() ===  new Date(dateAct).getTime()){
@@ -271,22 +278,22 @@ function Semaine(props) {
                         estFin = true;
                     }
 
-
                     return (
                         <>
 
-                            <span className={isBetween ? "event event-multiday" : "d-none"} style={{ backgroundColor: jalon.couleur }} c></span>
-                            <span className={estDebut ? "event event-multiday-start eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className={estFin ? "event event-multiday-finish eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className="event" className={jalon.charge == 1  ? "event" : "d-none"} style={{ backgroundColor: '#bd32ce ' }} ></span>
-                            <span className="event" className={jalon.charge == 1  ? "event" : "d-none"} style={{ backgroundColor: '#bd32ce ' }} ></span>
+                            <span className={isBetween ? "event event-multiday" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
+                            <span className={estDebut === true ? "event event-multiday-start eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
+                            <span className={estFin === true ? "event event-multiday-finish eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
+                            <span className="event" className={jalon.charge == 1 && isBetween ? "event" : "d-none"} style={{ backgroundColor: jalon.couleur  }} ></span>
+
                         </>
                     )
 
                 })}
 
             </td>
-            <td className={aujourdhui == calendrier.Sunday[props.index] ? "day today" : "day"}>
+            <td className={aujourdhui == calendrier.Sunday[props.index] ? "day today" : "day"}
+                onClick={ () => {props.setDateAjout(dateDuCalendrier.Sunday[props.index])}} data-bs-toggle="modal" data-bs-target="#ajoutModal">
                     <span className="number"> {calendrier.Sunday[props.index]}</span>
 
                 {jalons.length > 0 && jalons.map((jalon, cpt) => {
@@ -296,11 +303,11 @@ function Semaine(props) {
                     const dateAct = dateDuCalendrier.Sunday[props.index]
 
                     // Vérifier si la date du jalon est entre deux dates
-
-                    const isBetween =
-                        new Date(dateAct) > new Date(dateDebJalon) &&
-                        new Date(dateAct) < new Date(dateFinJalon);
-
+                    var isBetween = false ;
+                    if(new Date(dateAct).getTime() > new Date(dateDebJalon).getTime() &&
+                        new Date(dateAct).getTime() < new Date(dateFinJalon).getTime() ){
+                        isBetween = true ;
+                    }
 
                     var estDebut = false;
                     if(new Date(dateDebJalon).getTime() ===  new Date(dateAct).getTime()){
@@ -314,11 +321,11 @@ function Semaine(props) {
                     return (
                         <>
 
-                            <span className={isBetween ? "event event-multiday" : "d-none"} style={{ backgroundColor: jalon.couleur }} c></span>
-                            <span className={estDebut ? "event event-multiday-start eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className={estFin ? "event event-multiday-finish eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className="event" className={jalon.charge == 1  ? "event" : "d-none"} style={{ backgroundColor: '#bd32ce ' }} ></span>
-                            <span className="event" className={jalon.charge == 1  ? "event" : "d-none"} style={{ backgroundColor: '#bd32ce ' }} ></span>
+                            <span className={isBetween ? "event event-multiday" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
+                            <span className={estDebut === true ? "event event-multiday-start eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
+                            <span className={estFin === true ? "event event-multiday-finish eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
+                            <span className="event" className={jalon.charge == 1 && isBetween ? "event" : "d-none"} style={{ backgroundColor: jalon.couleur  }} ></span>
+
                         </>
                     )
 
@@ -360,42 +367,32 @@ function getDaysinCalendars(year, month) {
     // Fonction pour mapper le jour (1 = Lundi) aux jours de la semaine
     const mapDayToWeek = (day) => {
         switch (day) {
-            case 1:
-                return "Monday";
-            case 2:
-                return "Tuesday";
-            case 3:
-                return "Wednesday";
-            case 4:
-                return "Thursday";
-            case 5:
-                return "Friday";
-            case 6:
-                return "Saturday";
-            case 7:
-                return "Sunday";
-            default:
-                return null;
+            case 1: return "Monday";
+            case 2: return "Tuesday";
+            case 3: return "Wednesday";
+            case 4: return "Thursday";
+            case 5: return "Friday";
+            case 6: return "Saturday";
+            case 7: return "Sunday";
+            default: return null;
         }
     };
 
-    // Fonction pour formater la date au format "YYYY-MM-DD"
+    // Fonction pour formater les dates au format "yyyy-mm-dd"
     const formatDate = (year, month, day) => {
-        const monthStr = String(month + 1).padStart(2, '0'); // Ajouter un 0 devant si nécessaire
-        const dayStr = String(day).padStart(2, '0'); // Ajouter un 0 devant si nécessaire
-        return `${year}-${monthStr}-${dayStr}`;
+        const formattedDay = String(day).padStart(2, '0');
+        const formattedMonth = String(month + 1).padStart(2, '0');
+        return `${year}-${formattedMonth}-${formattedDay}`;
     };
 
     // Ajouter les jours du mois précédent s'il ne commence pas un Lundi
     if (firstDayOfWeek !== 1) {
-        const previousMonthDays = new Date(year, month, 0).getDate(); // Dernier jour du mois précédent
-        const previousMonth = month === 0 ? 11 : month - 1;
-        const previousYear = month === 0 ? year - 1 : year;
-
+        let previousMonthDays = new Date(year, month, 0).getDate(); // Dernier jour du mois précédent
         for (let i = firstDayOfWeek - 1; i >= 1; i--) {
             const dayOfWeek = mapDayToWeek(i);
-            const dayNumber = previousMonthDays - (firstDayOfWeek - 1) + (i - 1);
-            daysOfWeek[dayOfWeek].unshift(formatDate(previousYear, previousMonth, dayNumber));
+            // Ajouter les jours du mois précédent avec le format "yyyy-mm-dd"
+            daysOfWeek[dayOfWeek].unshift(formatDate(year, month - 1, previousMonthDays));
+            previousMonthDays--; // Décrémenter après utilisation
         }
     }
 
@@ -405,22 +402,21 @@ function getDaysinCalendars(year, month) {
         daysOfWeek[dayOfWeek].push(formatDate(year, month, day));
     }
 
-    // Compléter avec les jours du mois suivant si nécessaire pour remplir un tableau de 6 semaines (42 cases)
+    // Compléter avec les jours du mois suivant si nécessaire pour remplir jusqu'à 6 lignes complètes
     const totalDays = Object.values(daysOfWeek).reduce((acc, days) => acc + days.length, 0);
     const remainingDays = 42 - totalDays;
 
     if (remainingDays > 0) {
-        const nextMonth = (month + 1) % 12;
-        const nextYear = month === 11 ? year + 1 : year;
-
         for (let i = 1; i <= remainingDays; i++) {
             const dayOfWeek = mapDayToWeek(new Date(year, month + 1, i).getDay() || 7);
-            daysOfWeek[dayOfWeek].push(formatDate(nextYear, nextMonth, i));
+            daysOfWeek[dayOfWeek].push(formatDate(year, month + 1, i));
         }
     }
 
     return daysOfWeek;
 }
+
+
 
 
 export default Semaine;

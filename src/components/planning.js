@@ -7,6 +7,7 @@ import JalonCrud from "./jalonCRUD"
 
 function Planning(props) {
     const [dateAjout, setDateAjout] = useState("");
+    const[mettreAJour, setMettreAJour] = useState(true)
 
     const today = new Date();
     const monthName = new Intl.DateTimeFormat('fr-FR', { month: 'long' }).format(today);
@@ -41,7 +42,7 @@ function Planning(props) {
         console.log("mise à jour de mes jalons ")
         getJalonProjet()
 
-    }, [props.projetEnCours])
+    }, [props.projetEnCours, mettreAJour])
 
 
     const daysOfWeekOrder = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
@@ -58,7 +59,7 @@ function Planning(props) {
                     setError("Impossible de récupérer les projets" )
                 }
                 else{
-                    console.log(data)
+                    console.log("mes Jalons :", data)
                     setJalon(data) ;
                 }
             } catch (error) {
@@ -181,7 +182,8 @@ function Planning(props) {
                 </div>
             </div>
 
-            <JalonCrud setDateAjout={setDateAjout} dateAjout={dateAjout}/>
+            <JalonCrud setDateAjout={setDateAjout} dateAjout={dateAjout} projetEnCours={props.projetEnCours}
+                       jalons={jalons} setMettreAJour={setMettreAJour} mettreAJour={mettreAJour} />
 
         </>
     )
