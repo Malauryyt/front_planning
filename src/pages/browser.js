@@ -5,6 +5,7 @@ import {jwtDecode} from 'jwt-decode';
 import { TableauDeBord } from './tableauDeBord.js';
 import Connexion from "../components/connexion";
 import {ProjetRecap} from "./projetRecap";
+import {Jalon} from "./jalon.js";
 
 export default function Browser() {
 
@@ -86,6 +87,7 @@ export default function Browser() {
                     <Route path='/' element={<TableauDeBord user={user} projet={projet} setProjet={setProjet}/>} />
                     <Route path='/connexion' element={<Connexion user={user} setUser={initUser}  />} />
                     <Route path='/projet' element={<ProjetRecap user={user} setUser={initUser}  projet={projet} setProjet={setProjet} />} />
+                    <Route path='/planning' element={<Jalon user={user} setUser={initUser}  projet={projet} setProjet={setProjet} />} />
 
                 </Routes>
             </BrowserRouter>
