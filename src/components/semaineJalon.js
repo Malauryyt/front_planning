@@ -62,20 +62,11 @@ function Semaine(props) {
                     console.log(props.index)
 
                     // Vérifier si la date du jalon est entre deux dates
-
                     var isBetween = false ;
                     if(new Date(dateAct).getTime() > new Date(dateDebJalon).getTime() &&
                         new Date(dateAct).getTime() < new Date(dateFinJalon).getTime() ){
                         isBetween = true ;
                     }
-
-
-                    console.log("mon index date ", props.index)
-                    console.log(dateAct)
-                    console.log(dateDebJalon)
-                    console.log(dateFinJalon)
-                    console.log(isBetween)
-                    console.log("mon id jalon :", jalon.id_jalon)
 
                     var estDebut = false;
                     if(new Date(dateDebJalon).getTime() ===  new Date(dateAct).getTime()){
@@ -112,11 +103,11 @@ function Semaine(props) {
                     const dateAct = dateDuCalendrier.Tuesday[props.index]
 
                     // Vérifier si la date du jalon est entre deux dates
-
-                    const isBetween =
-                        new Date(dateAct) > new Date(dateDebJalon) &&
-                        new Date(dateAct) < new Date(dateFinJalon);
-
+                    var isBetween = false ;
+                    if(new Date(dateAct).getTime() > new Date(dateDebJalon).getTime() &&
+                        new Date(dateAct).getTime() < new Date(dateFinJalon).getTime() ){
+                        isBetween = true ;
+                    }
 
                     var estDebut = false;
                     if(new Date(dateDebJalon).getTime() ===  new Date(dateAct).getTime()){
@@ -129,11 +120,12 @@ function Semaine(props) {
 
                     return (
                         <>
-                            <span className={isBetween ? "event event-multiday" : "d-none"} style={{ backgroundColor: jalon.couleur }} c></span>
-                            <span className={estDebut ? "event event-multiday-start eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className={estFin ? "event event-multiday-finish eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className="event" className={jalon.charge == 1  ? "event" : "d-none"} style={{ backgroundColor: '#bd32ce ' }} ></span>
-                            <span className="event" className={jalon.charge == 1  ? "event" : "d-none"} style={{ backgroundColor: '#bd32ce ' }} ></span>
+
+                            <span className={isBetween ? "event event-multiday" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
+                            <span className={estDebut === true ? "event event-multiday-start eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
+                            <span className={estFin === true ? "event event-multiday-finish eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
+                            <span className="event" className={jalon.charge == 1 && isBetween ? "event" : "d-none"} style={{ backgroundColor: jalon.couleur  }} ></span>
+
                         </>
                     )
 
@@ -151,11 +143,11 @@ function Semaine(props) {
                     const dateAct = dateDuCalendrier.Wednesday[props.index]
 
                     // Vérifier si la date du jalon est entre deux dates
-
-                    const isBetween =
-                        new Date(dateAct) > new Date(dateDebJalon) &&
-                        new Date(dateAct) < new Date(dateFinJalon);
-
+                    var isBetween = false ;
+                    if(new Date(dateAct).getTime() > new Date(dateDebJalon).getTime() &&
+                        new Date(dateAct).getTime() < new Date(dateFinJalon).getTime() ){
+                        isBetween = true ;
+                    }
 
                     var estDebut = false;
                     if(new Date(dateDebJalon).getTime() ===  new Date(dateAct).getTime()){
@@ -169,11 +161,11 @@ function Semaine(props) {
                     return (
                         <>
 
-                            <span className={isBetween ? "event event-multiday" : "d-none"} style={{ backgroundColor: jalon.couleur }} c></span>
-                            <span className={estDebut ? "event event-multiday-start eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className={estFin ? "event event-multiday-finish eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className="event" className={jalon.charge == 1  ? "event" : "d-none"} style={{ backgroundColor: '#bd32ce ' }} ></span>
-                            <span className="event" className={jalon.charge == 1  ? "event" : "d-none"} style={{ backgroundColor: '#bd32ce ' }} ></span>
+                            <span className={isBetween ? "event event-multiday" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
+                            <span className={estDebut === true ? "event event-multiday-start eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
+                            <span className={estFin === true ? "event event-multiday-finish eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
+                            <span className="event" className={jalon.charge == 1 && isBetween ? "event" : "d-none"} style={{ backgroundColor: jalon.couleur  }} ></span>
+
                         </>
                     )
 
@@ -191,11 +183,11 @@ function Semaine(props) {
                     const dateAct = dateDuCalendrier.Thursday[props.index]
 
                     // Vérifier si la date du jalon est entre deux dates
-
-                    const isBetween =
-                        new Date(dateAct) > new Date(dateDebJalon) &&
-                        new Date(dateAct) < new Date(dateFinJalon);
-
+                    var isBetween = false ;
+                    if(new Date(dateAct).getTime() > new Date(dateDebJalon).getTime() &&
+                        new Date(dateAct).getTime() < new Date(dateFinJalon).getTime() ){
+                        isBetween = true ;
+                    }
 
                     var estDebut = false;
                     if(new Date(dateDebJalon).getTime() ===  new Date(dateAct).getTime()){
@@ -208,11 +200,12 @@ function Semaine(props) {
 
                     return (
                         <>
-                            <span className={isBetween ? "event event-multiday" : "d-none"} style={{ backgroundColor: jalon.couleur }} c></span>
-                            <span className={estDebut ? "event event-multiday-start eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className={estFin ? "event event-multiday-finish eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className="event" className={jalon.charge == 1  ? "event" : "d-none"} style={{ backgroundColor: '#bd32ce ' }} ></span>
-                            <span className="event" className={jalon.charge == 1  ? "event" : "d-none"} style={{ backgroundColor: '#bd32ce ' }} ></span>
+
+                            <span className={isBetween ? "event event-multiday" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
+                            <span className={estDebut === true ? "event event-multiday-start eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
+                            <span className={estFin === true ? "event event-multiday-finish eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
+                            <span className="event" className={jalon.charge == 1 && isBetween ? "event" : "d-none"} style={{ backgroundColor: jalon.couleur  }} ></span>
+
                         </>
                     )
 
@@ -230,11 +223,11 @@ function Semaine(props) {
                     const dateAct = dateDuCalendrier.Friday[props.index]
 
                     // Vérifier si la date du jalon est entre deux dates
-
-                    const isBetween =
-                        new Date(dateAct) > new Date(dateDebJalon) &&
-                        new Date(dateAct) < new Date(dateFinJalon);
-
+                    var isBetween = false ;
+                    if(new Date(dateAct).getTime() > new Date(dateDebJalon).getTime() &&
+                        new Date(dateAct).getTime() < new Date(dateFinJalon).getTime() ){
+                        isBetween = true ;
+                    }
 
                     var estDebut = false;
                     if(new Date(dateDebJalon).getTime() ===  new Date(dateAct).getTime()){
@@ -248,11 +241,11 @@ function Semaine(props) {
                     return (
                         <>
 
-                            <span className={isBetween ? "event event-multiday" : "d-none"} style={{ backgroundColor: jalon.couleur }} c></span>
-                            <span className={estDebut ? "event event-multiday-start eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className={estFin ? "event event-multiday-finish eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className="event" className={jalon.charge == 1  ? "event" : "d-none"} style={{ backgroundColor: '#bd32ce ' }} ></span>
-                            <span className="event" className={jalon.charge == 1  ? "event" : "d-none"} style={{ backgroundColor: '#bd32ce ' }} ></span>
+                            <span className={isBetween ? "event event-multiday" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
+                            <span className={estDebut === true ? "event event-multiday-start eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
+                            <span className={estFin === true ? "event event-multiday-finish eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
+                            <span className="event" className={jalon.charge == 1 && isBetween ? "event" : "d-none"} style={{ backgroundColor: jalon.couleur  }} ></span>
+
                         </>
                     )
 
@@ -270,11 +263,11 @@ function Semaine(props) {
                     const dateAct = dateDuCalendrier.Saturday[props.index]
 
                     // Vérifier si la date du jalon est entre deux dates
-
-                    const isBetween =
-                        new Date(dateAct) > new Date(dateDebJalon) &&
-                        new Date(dateAct) < new Date(dateFinJalon);
-
+                    var isBetween = false ;
+                    if(new Date(dateAct).getTime() > new Date(dateDebJalon).getTime() &&
+                        new Date(dateAct).getTime() < new Date(dateFinJalon).getTime() ){
+                        isBetween = true ;
+                    }
 
                     var estDebut = false;
                     if(new Date(dateDebJalon).getTime() ===  new Date(dateAct).getTime()){
@@ -285,15 +278,14 @@ function Semaine(props) {
                         estFin = true;
                     }
 
-
                     return (
                         <>
 
-                            <span className={isBetween ? "event event-multiday" : "d-none"} style={{ backgroundColor: jalon.couleur }} c></span>
-                            <span className={estDebut ? "event event-multiday-start eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className={estFin ? "event event-multiday-finish eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className="event" className={jalon.charge == 1  ? "event" : "d-none"} style={{ backgroundColor: '#bd32ce ' }} ></span>
-                            <span className="event" className={jalon.charge == 1  ? "event" : "d-none"} style={{ backgroundColor: '#bd32ce ' }} ></span>
+                            <span className={isBetween ? "event event-multiday" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
+                            <span className={estDebut === true ? "event event-multiday-start eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
+                            <span className={estFin === true ? "event event-multiday-finish eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
+                            <span className="event" className={jalon.charge == 1 && isBetween ? "event" : "d-none"} style={{ backgroundColor: jalon.couleur  }} ></span>
+
                         </>
                     )
 
@@ -311,11 +303,11 @@ function Semaine(props) {
                     const dateAct = dateDuCalendrier.Sunday[props.index]
 
                     // Vérifier si la date du jalon est entre deux dates
-
-                    const isBetween =
-                        new Date(dateAct) > new Date(dateDebJalon) &&
-                        new Date(dateAct) < new Date(dateFinJalon);
-
+                    var isBetween = false ;
+                    if(new Date(dateAct).getTime() > new Date(dateDebJalon).getTime() &&
+                        new Date(dateAct).getTime() < new Date(dateFinJalon).getTime() ){
+                        isBetween = true ;
+                    }
 
                     var estDebut = false;
                     if(new Date(dateDebJalon).getTime() ===  new Date(dateAct).getTime()){
@@ -329,11 +321,11 @@ function Semaine(props) {
                     return (
                         <>
 
-                            <span className={isBetween ? "event event-multiday" : "d-none"} style={{ backgroundColor: jalon.couleur }} c></span>
-                            <span className={estDebut ? "event event-multiday-start eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className={estFin ? "event event-multiday-finish eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className="event" className={jalon.charge == 1  ? "event" : "d-none"} style={{ backgroundColor: '#bd32ce ' }} ></span>
-                            <span className="event" className={jalon.charge == 1  ? "event" : "d-none"} style={{ backgroundColor: '#bd32ce ' }} ></span>
+                            <span className={isBetween ? "event event-multiday" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
+                            <span className={estDebut === true ? "event event-multiday-start eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
+                            <span className={estFin === true ? "event event-multiday-finish eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
+                            <span className="event" className={jalon.charge == 1 && isBetween ? "event" : "d-none"} style={{ backgroundColor: jalon.couleur  }} ></span>
+
                         </>
                     )
 
