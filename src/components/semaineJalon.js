@@ -79,8 +79,6 @@ function Semaine(props) {
                     var dateFinJalon =   jalon.date_liv_theorique;
                     var dateDebJalon = jalon.date_com_theorique ;
                     var dateAct = dateDuCalendrier.Monday[props.index]
-                    console.log(dateDuCalendrier)
-                    console.log(props.index)
 
                     // Vérifier si la date du jalon est entre deux dates
                     var isBetween = false ;
@@ -98,6 +96,11 @@ function Semaine(props) {
                         estFin = true;
                     }
 
+                    var estPasse = false
+                    if( new Date(dateAct).getTime() < new Date(aujourdhui).getTime() ){
+                        estPasse = true
+                    }
+
                     var nomClasse = "jal" + jalon.id_jalon
 
                     return (
@@ -106,7 +109,7 @@ function Semaine(props) {
                             <span className={isBetween ? `event event-multiday jal-${jalon.id_jalon}` : "d-none"}
                                   onMouseOver={() => handleMouseOver(jalon.id_jalon)}
                                   onMouseOut={() => handleMouseOut(jalon.id_jalon)}
-                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }}
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: estPasse ? `${jalon.couleur}80` :  jalon.couleur}}
 
                                   onClick={ () => {props.setJalonModif(jalon.id_jalon)}}
                                   data-bs-toggle="modal" data-bs-target="#modifModal"
@@ -115,16 +118,28 @@ function Semaine(props) {
                             <span className={estDebut === true ? `event event-multiday-start eventclass jal-${jalon.id_jalon}` : "d-none"}
                                   onMouseOver={() => handleMouseOver(jalon.id_jalon)}
                                   onMouseOut={() => handleMouseOut(jalon.id_jalon)}
-                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }} ></span>
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: estPasse ? `${jalon.couleur}80` :  jalon.couleur}}
+
+                                  onClick={ () => {props.setJalonModif(jalon.id_jalon)}}
+                                  data-bs-toggle="modal" data-bs-target="#modifModal"
+
+                            ></span>
                             <span className={estFin === true ? `event event-multiday-finish eventclass jal-${jalon.id_jalon}` : "d-none"}
                                   onMouseOver={() => handleMouseOver(jalon.id_jalon)}
                                   onMouseOut={() => handleMouseOut(jalon.id_jalon)}
-                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }}
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: estPasse ? `${jalon.couleur}80` :  jalon.couleur}}
+
+                                  onClick={ () => {props.setJalonModif(jalon.id_jalon)}}
+                                  data-bs-toggle="modal" data-bs-target="#modifModal"
                             ></span>
                             <span className="event" className={jalon.charge == 1 && isBetween ? `event jal-${jalon.id_jalon}` : "d-none"}
                                   onMouseOver={() => handleMouseOver(jalon.id_jalon)}
                                   onMouseOut={() => handleMouseOut(jalon.id_jalon)}
-                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }} ></span>
+                                  style={{ transition: "box-shadow 0.3s ease",backgroundColor: estPasse ? `${jalon.couleur}80` :  jalon.couleur}}
+
+                                  onClick={ () => {props.setJalonModif(jalon.id_jalon)}}
+                                  data-bs-toggle="modal" data-bs-target="#modifModal"
+                            ></span>
 
                         </>
                     )
@@ -133,7 +148,7 @@ function Semaine(props) {
 
 
             </td>
-            <td className={aujourdhui == calendrier.Tuesday[props.index] ? "day today" : "day"}
+            <td className={ new Date(aujourdhui).getTime() == new Date(dateDuCalendrier.Tuesday[props.index]).getTime() ? "day today" : "day "}
                 onClick={ () => {props.setDateAjout(dateDuCalendrier.Tuesday[props.index])}} data-bs-toggle="modal" data-bs-target="#ajoutModal">
                 <span className="number">{calendrier.Tuesday[props.index]}</span>
 
@@ -158,6 +173,17 @@ function Semaine(props) {
                     if( new Date(dateFinJalon).getTime() ===  new Date(dateAct).getTime()){
                         estFin = true;
                     }
+                    var estPasse = false
+                    if( new Date(dateAct).getTime() < new Date(aujourdhui).getTime() ){
+                        estPasse = true
+                    }
+
+                    var projetDepasse = false
+                    if(new Date(dateAct).getTime() === new Date(dateFinJalon).getTime()  && new Date(dateAct).getTime() <new Date(aujourdhui).getTime() && jalon.etat != 2){
+                        projetDepasse = true
+                    }
+
+                    var nomClasse = "jal" + jalon.id_jalon
 
                     return (
                         <>
@@ -165,23 +191,39 @@ function Semaine(props) {
                             <span className={isBetween ? `event event-multiday jal-${jalon.id_jalon}` : "d-none"}
                                   onMouseOver={() => handleMouseOver(jalon.id_jalon)}
                                   onMouseOut={() => handleMouseOut(jalon.id_jalon)}
-                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }}
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: estPasse ? `${jalon.couleur}80` :  jalon.couleur}}
 
+                                  onClick={ () => {props.setJalonModif(jalon.id_jalon)}}
+                                  data-bs-toggle="modal" data-bs-target="#modifModal"
 
                             ></span>
                             <span className={estDebut === true ? `event event-multiday-start eventclass jal-${jalon.id_jalon}` : "d-none"}
                                   onMouseOver={() => handleMouseOver(jalon.id_jalon)}
                                   onMouseOut={() => handleMouseOut(jalon.id_jalon)}
-                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }} ></span>
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: estPasse ? `${jalon.couleur}80` :  jalon.couleur}}
+
+                                  onClick={ () => {props.setJalonModif(jalon.id_jalon)}}
+                                  data-bs-toggle="modal" data-bs-target="#modifModal"
+
+                            ></span>
                             <span className={estFin === true ? `event event-multiday-finish eventclass jal-${jalon.id_jalon}` : "d-none"}
                                   onMouseOver={() => handleMouseOver(jalon.id_jalon)}
                                   onMouseOut={() => handleMouseOut(jalon.id_jalon)}
-                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }}
-                            ></span>
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: estPasse ? `${jalon.couleur}80` :  jalon.couleur}}
+
+                                  onClick={ () => {props.setJalonModif(jalon.id_jalon)}}
+                                  data-bs-toggle="modal" data-bs-target="#modifModal">
+                                <div className="d-flex justify-content-center"> <FontAwesomeIcon icon="fa-solid fa-triangle-exclamation" beat style={{color: "#ff0000",}} size="lg" className={projetDepasse ? "mt-3" : "d-none"} /> </div>
+
+                            </span>
                             <span className="event" className={jalon.charge == 1 && isBetween ? `event jal-${jalon.id_jalon}` : "d-none"}
                                   onMouseOver={() => handleMouseOver(jalon.id_jalon)}
                                   onMouseOut={() => handleMouseOut(jalon.id_jalon)}
-                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }} ></span>
+                                  style={{ transition: "box-shadow 0.3s ease",backgroundColor: estPasse ? `${jalon.couleur}80` :  jalon.couleur}}
+
+                                  onClick={ () => {props.setJalonModif(jalon.id_jalon)}}
+                                  data-bs-toggle="modal" data-bs-target="#modifModal"
+                            ></span>
 
                         </>
                     )
@@ -189,7 +231,7 @@ function Semaine(props) {
                 })}
 
             </td>
-            <td className={aujourdhui == calendrier.Wednesday[props.index] ? "day today" : "day"}
+            <td className={ new Date(aujourdhui).getTime() == new Date(dateDuCalendrier.Wednesday[props.index]).getTime() ? "day today" : "day "}
                 onClick={ () => {props.setDateAjout(dateDuCalendrier.Wednesday[props.index])}} data-bs-toggle="modal" data-bs-target="#ajoutModal">
                 <span className="number"> {calendrier.Wednesday[props.index]}</span>
 
@@ -214,6 +256,17 @@ function Semaine(props) {
                     if( new Date(dateFinJalon).getTime() ===  new Date(dateAct).getTime()){
                         estFin = true;
                     }
+                    var estPasse = false
+                    if( new Date(dateAct).getTime() < new Date(aujourdhui).getTime() ){
+                        estPasse = true
+                    }
+
+                    var projetDepasse = false
+                    if(new Date(dateAct).getTime() === new Date(dateFinJalon).getTime()  && new Date(dateAct).getTime() <new Date(aujourdhui).getTime() && jalon.etat != 2){
+                        projetDepasse = true
+                    }
+
+                    var nomClasse = "jal" + jalon.id_jalon
 
                     return (
                         <>
@@ -221,23 +274,39 @@ function Semaine(props) {
                             <span className={isBetween ? `event event-multiday jal-${jalon.id_jalon}` : "d-none"}
                                   onMouseOver={() => handleMouseOver(jalon.id_jalon)}
                                   onMouseOut={() => handleMouseOut(jalon.id_jalon)}
-                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }}
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: estPasse ? `${jalon.couleur}80` :  jalon.couleur}}
 
+                                  onClick={ () => {props.setJalonModif(jalon.id_jalon)}}
+                                  data-bs-toggle="modal" data-bs-target="#modifModal"
 
                             ></span>
                             <span className={estDebut === true ? `event event-multiday-start eventclass jal-${jalon.id_jalon}` : "d-none"}
                                   onMouseOver={() => handleMouseOver(jalon.id_jalon)}
                                   onMouseOut={() => handleMouseOut(jalon.id_jalon)}
-                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }} ></span>
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: estPasse ? `${jalon.couleur}80` :  jalon.couleur}}
+
+                                  onClick={ () => {props.setJalonModif(jalon.id_jalon)}}
+                                  data-bs-toggle="modal" data-bs-target="#modifModal"
+
+                            ></span>
                             <span className={estFin === true ? `event event-multiday-finish eventclass jal-${jalon.id_jalon}` : "d-none"}
                                   onMouseOver={() => handleMouseOver(jalon.id_jalon)}
                                   onMouseOut={() => handleMouseOut(jalon.id_jalon)}
-                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }}
-                            ></span>
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: estPasse ? `${jalon.couleur}80` :  jalon.couleur}}
+
+                                  onClick={ () => {props.setJalonModif(jalon.id_jalon)}}
+                                  data-bs-toggle="modal" data-bs-target="#modifModal">
+                                <div className="d-flex justify-content-center"> <FontAwesomeIcon icon="fa-solid fa-triangle-exclamation" beat style={{color: "#ff0000",}} size="lg" className={projetDepasse ? "mt-3" : "d-none"} /> </div>
+
+                            </span>
                             <span className="event" className={jalon.charge == 1 && isBetween ? `event jal-${jalon.id_jalon}` : "d-none"}
                                   onMouseOver={() => handleMouseOver(jalon.id_jalon)}
                                   onMouseOut={() => handleMouseOut(jalon.id_jalon)}
-                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }} ></span>
+                                  style={{ transition: "box-shadow 0.3s ease",backgroundColor: estPasse ? `${jalon.couleur}80` :  jalon.couleur}}
+
+                                  onClick={ () => {props.setJalonModif(jalon.id_jalon)}}
+                                  data-bs-toggle="modal" data-bs-target="#modifModal"
+                            ></span>
 
                         </>
                     )
@@ -245,7 +314,7 @@ function Semaine(props) {
                 })}
 
             </td>
-            <td className={aujourdhui == calendrier.Thursday[props.index] ? "day today" : "day"}
+            <td className={ new Date(aujourdhui).getTime() == new Date(dateDuCalendrier.Thursday[props.index]).getTime() ? "day today" : "day "}
                 onClick={ () => {props.setDateAjout(dateDuCalendrier.Thursday[props.index])}} data-bs-toggle="modal" data-bs-target="#ajoutModal">
                 <span className="number"> {calendrier.Thursday[props.index]}</span>
 
@@ -270,6 +339,17 @@ function Semaine(props) {
                     if( new Date(dateFinJalon).getTime() ===  new Date(dateAct).getTime()){
                         estFin = true;
                     }
+                    var estPasse = false
+                    if( new Date(dateAct).getTime() < new Date(aujourdhui).getTime() ){
+                        estPasse = true
+                    }
+
+                    var projetDepasse = false
+                    if(new Date(dateAct).getTime() === new Date(dateFinJalon).getTime()  && new Date(dateAct).getTime() <new Date(aujourdhui).getTime() && jalon.etat != 2){
+                        projetDepasse = true
+                    }
+
+                    var nomClasse = "jal" + jalon.id_jalon
 
                     return (
                         <>
@@ -277,23 +357,39 @@ function Semaine(props) {
                             <span className={isBetween ? `event event-multiday jal-${jalon.id_jalon}` : "d-none"}
                                   onMouseOver={() => handleMouseOver(jalon.id_jalon)}
                                   onMouseOut={() => handleMouseOut(jalon.id_jalon)}
-                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }}
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: estPasse ? `${jalon.couleur}80` :  jalon.couleur}}
 
+                                  onClick={ () => {props.setJalonModif(jalon.id_jalon)}}
+                                  data-bs-toggle="modal" data-bs-target="#modifModal"
 
                             ></span>
                             <span className={estDebut === true ? `event event-multiday-start eventclass jal-${jalon.id_jalon}` : "d-none"}
                                   onMouseOver={() => handleMouseOver(jalon.id_jalon)}
                                   onMouseOut={() => handleMouseOut(jalon.id_jalon)}
-                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }} ></span>
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: estPasse ? `${jalon.couleur}80` :  jalon.couleur}}
+
+                                  onClick={ () => {props.setJalonModif(jalon.id_jalon)}}
+                                  data-bs-toggle="modal" data-bs-target="#modifModal"
+
+                            ></span>
                             <span className={estFin === true ? `event event-multiday-finish eventclass jal-${jalon.id_jalon}` : "d-none"}
                                   onMouseOver={() => handleMouseOver(jalon.id_jalon)}
                                   onMouseOut={() => handleMouseOut(jalon.id_jalon)}
-                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }}
-                            ></span>
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: estPasse ? `${jalon.couleur}80` :  jalon.couleur}}
+
+                                  onClick={ () => {props.setJalonModif(jalon.id_jalon)}}
+                                  data-bs-toggle="modal" data-bs-target="#modifModal">
+                                <div className="d-flex justify-content-center"> <FontAwesomeIcon icon="fa-solid fa-triangle-exclamation" beat style={{color: "#ff0000",}} size="lg" className={projetDepasse ? "mt-3" : "d-none"} /> </div>
+
+                            </span>
                             <span className="event" className={jalon.charge == 1 && isBetween ? `event jal-${jalon.id_jalon}` : "d-none"}
                                   onMouseOver={() => handleMouseOver(jalon.id_jalon)}
                                   onMouseOut={() => handleMouseOut(jalon.id_jalon)}
-                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }} ></span>
+                                  style={{ transition: "box-shadow 0.3s ease",backgroundColor: estPasse ? `${jalon.couleur}80` :  jalon.couleur}}
+
+                                  onClick={ () => {props.setJalonModif(jalon.id_jalon)}}
+                                  data-bs-toggle="modal" data-bs-target="#modifModal"
+                            ></span>
 
                         </>
                     )
@@ -301,7 +397,7 @@ function Semaine(props) {
                 })}
 
             </td>
-            <td  className={aujourdhui == calendrier.Friday[props.index] ? "day today" : "day"}
+            <td  className={ new Date(aujourdhui).getTime() == new Date(dateDuCalendrier.Friday[props.index]).getTime() ? "day today" : "day "}
                  onClick={ () => {props.setDateAjout(dateDuCalendrier.Friday[props.index])}} data-bs-toggle="modal" data-bs-target="#ajoutModal">
                 <span className="number"> {calendrier.Friday[props.index]}</span>
 
@@ -327,29 +423,57 @@ function Semaine(props) {
                         estFin = true;
                     }
 
+                    var estPasse = false
+                    if( new Date(dateAct).getTime() < new Date(aujourdhui).getTime() ){
+                        estPasse = true
+                    }
+
+                    var projetDepasse = false
+                    if(new Date(dateAct).getTime() === new Date(dateFinJalon).getTime()  && new Date(dateAct).getTime() <new Date(aujourdhui).getTime() && jalon.etat != 2){
+                        projetDepasse = true
+                    }
+
+                    var nomClasse = "jal" + jalon.id_jalon
+
                     return (
                         <>
 
                             <span className={isBetween ? `event event-multiday jal-${jalon.id_jalon}` : "d-none"}
                                   onMouseOver={() => handleMouseOver(jalon.id_jalon)}
                                   onMouseOut={() => handleMouseOut(jalon.id_jalon)}
-                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }}
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: estPasse ? `${jalon.couleur}80` :  jalon.couleur}}
 
+                                  onClick={ () => {props.setJalonModif(jalon.id_jalon)}}
+                                  data-bs-toggle="modal" data-bs-target="#modifModal"
 
                             ></span>
                             <span className={estDebut === true ? `event event-multiday-start eventclass jal-${jalon.id_jalon}` : "d-none"}
                                   onMouseOver={() => handleMouseOver(jalon.id_jalon)}
                                   onMouseOut={() => handleMouseOut(jalon.id_jalon)}
-                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }} ></span>
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: estPasse ? `${jalon.couleur}80` :  jalon.couleur}}
+
+                                  onClick={ () => {props.setJalonModif(jalon.id_jalon)}}
+                                  data-bs-toggle="modal" data-bs-target="#modifModal"
+
+                            ></span>
                             <span className={estFin === true ? `event event-multiday-finish eventclass jal-${jalon.id_jalon}` : "d-none"}
                                   onMouseOver={() => handleMouseOver(jalon.id_jalon)}
                                   onMouseOut={() => handleMouseOut(jalon.id_jalon)}
-                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }}
-                            ></span>
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: estPasse ? `${jalon.couleur}80` :  jalon.couleur}}
+
+                                  onClick={ () => {props.setJalonModif(jalon.id_jalon)}}
+                                  data-bs-toggle="modal" data-bs-target="#modifModal">
+                                <div className="d-flex justify-content-center"> <FontAwesomeIcon icon="fa-solid fa-triangle-exclamation" beat style={{color: "#ff0000",}} size="lg" className={projetDepasse ? "mt-3" : "d-none"} /> </div>
+
+                            </span>
                             <span className="event" className={jalon.charge == 1 && isBetween ? `event jal-${jalon.id_jalon}` : "d-none"}
                                   onMouseOver={() => handleMouseOver(jalon.id_jalon)}
                                   onMouseOut={() => handleMouseOut(jalon.id_jalon)}
-                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }} ></span>
+                                  style={{ transition: "box-shadow 0.3s ease",backgroundColor: estPasse ? `${jalon.couleur}80` :  jalon.couleur}}
+
+                                  onClick={ () => {props.setJalonModif(jalon.id_jalon)}}
+                                  data-bs-toggle="modal" data-bs-target="#modifModal"
+                            ></span>
 
                         </>
                     )
@@ -357,7 +481,7 @@ function Semaine(props) {
                 })}
 
             </td>
-            <td className={aujourdhui == calendrier.Saturday[props.index] ? "day today" : "day"}
+            <td className={ new Date(aujourdhui).getTime() == new Date(dateDuCalendrier.Saturday[props.index]).getTime() ? "day today" : "day "}
                 onClick={ () => {props.setDateAjout(dateDuCalendrier.Saturday[props.index])}} data-bs-toggle="modal" data-bs-target="#ajoutModal">
                 <span className="number"> {calendrier.Saturday[props.index]}</span>
 
@@ -383,29 +507,57 @@ function Semaine(props) {
                         estFin = true;
                     }
 
+                    var estPasse = false
+                    if( new Date(dateAct).getTime() < new Date(aujourdhui).getTime() ){
+                        estPasse = true
+                    }
+
+                    var projetDepasse = false
+                    if(new Date(dateAct).getTime() === new Date(dateFinJalon).getTime()  && new Date(dateAct).getTime() < new Date(aujourdhui).getTime() && jalon.etat != 2){
+                        projetDepasse = true
+                    }
+
+                    var nomClasse = "jal" + jalon.id_jalon
+
                     return (
                         <>
 
                             <span className={isBetween ? `event event-multiday jal-${jalon.id_jalon}` : "d-none"}
                                   onMouseOver={() => handleMouseOver(jalon.id_jalon)}
                                   onMouseOut={() => handleMouseOut(jalon.id_jalon)}
-                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }}
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: estPasse ? `${jalon.couleur}80` :  jalon.couleur}}
 
+                                  onClick={ () => {props.setJalonModif(jalon.id_jalon)}}
+                                  data-bs-toggle="modal" data-bs-target="#modifModal"
 
                             ></span>
                             <span className={estDebut === true ? `event event-multiday-start eventclass jal-${jalon.id_jalon}` : "d-none"}
                                   onMouseOver={() => handleMouseOver(jalon.id_jalon)}
                                   onMouseOut={() => handleMouseOut(jalon.id_jalon)}
-                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }} ></span>
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: estPasse ? `${jalon.couleur}80` :  jalon.couleur}}
+
+                                  onClick={ () => {props.setJalonModif(jalon.id_jalon)}}
+                                  data-bs-toggle="modal" data-bs-target="#modifModal"
+
+                            ></span>
                             <span className={estFin === true ? `event event-multiday-finish eventclass jal-${jalon.id_jalon}` : "d-none"}
                                   onMouseOver={() => handleMouseOver(jalon.id_jalon)}
                                   onMouseOut={() => handleMouseOut(jalon.id_jalon)}
-                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }}
-                            ></span>
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: estPasse ? `${jalon.couleur}80` :  jalon.couleur}}
+
+                                  onClick={ () => {props.setJalonModif(jalon.id_jalon)}}
+                                  data-bs-toggle="modal" data-bs-target="#modifModal">
+                                <div className="d-flex justify-content-center"> <FontAwesomeIcon icon="fa-solid fa-triangle-exclamation" beat style={{color: "#ff0000",}} size="lg" className={projetDepasse === true ? "mt-3" : "d-none"} /> </div>
+
+                            </span>
                             <span className="event" className={jalon.charge == 1 && isBetween ? `event jal-${jalon.id_jalon}` : "d-none"}
                                   onMouseOver={() => handleMouseOver(jalon.id_jalon)}
                                   onMouseOut={() => handleMouseOut(jalon.id_jalon)}
-                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }} ></span>
+                                  style={{ transition: "box-shadow 0.3s ease",backgroundColor: estPasse ? `${jalon.couleur}80` :  jalon.couleur}}
+
+                                  onClick={ () => {props.setJalonModif(jalon.id_jalon)}}
+                                  data-bs-toggle="modal" data-bs-target="#modifModal"
+                            ></span>
 
                         </>
                     )
@@ -413,7 +565,7 @@ function Semaine(props) {
                 })}
 
             </td>
-            <td className={aujourdhui == calendrier.Sunday[props.index] ? "day today" : "day"}
+            <td className={ new Date(aujourdhui).getTime() == new Date(dateDuCalendrier.Sunday[props.index]).getTime() ? "day today" : "day "}
                 onClick={ () => {props.setDateAjout(dateDuCalendrier.Sunday[props.index])}} data-bs-toggle="modal" data-bs-target="#ajoutModal">
                     <span className="number"> {calendrier.Sunday[props.index]}</span>
 
@@ -439,29 +591,57 @@ function Semaine(props) {
                         estFin = true;
                     }
 
+                    var estPasse = false
+                    if( new Date(dateAct).getTime() < new Date(aujourdhui).getTime() ){
+                        estPasse = true
+                    }
+
+                    var projetDepasse = false
+                    if(new Date(dateAct).getTime() === new Date(dateFinJalon).getTime()  && new Date(dateAct).getTime() <new Date(aujourdhui).getTime() && jalon.etat != 2){
+                        projetDepasse = true
+                    }
+
+                    var nomClasse = "jal" + jalon.id_jalon
+
                     return (
                         <>
 
                             <span className={isBetween ? `event event-multiday jal-${jalon.id_jalon}` : "d-none"}
                                   onMouseOver={() => handleMouseOver(jalon.id_jalon)}
                                   onMouseOut={() => handleMouseOut(jalon.id_jalon)}
-                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }}
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: estPasse ? `${jalon.couleur}80` :  jalon.couleur}}
 
+                                  onClick={ () => {props.setJalonModif(jalon.id_jalon)}}
+                                  data-bs-toggle="modal" data-bs-target="#modifModal"
 
                             ></span>
                             <span className={estDebut === true ? `event event-multiday-start eventclass jal-${jalon.id_jalon}` : "d-none"}
                                   onMouseOver={() => handleMouseOver(jalon.id_jalon)}
                                   onMouseOut={() => handleMouseOut(jalon.id_jalon)}
-                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }} ></span>
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: estPasse ? `${jalon.couleur}80` :  jalon.couleur}}
+
+                                  onClick={ () => {props.setJalonModif(jalon.id_jalon)}}
+                                  data-bs-toggle="modal" data-bs-target="#modifModal"
+
+                            ></span>
                             <span className={estFin === true ? `event event-multiday-finish eventclass jal-${jalon.id_jalon}` : "d-none"}
                                   onMouseOver={() => handleMouseOver(jalon.id_jalon)}
                                   onMouseOut={() => handleMouseOut(jalon.id_jalon)}
-                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }}
-                            ></span>
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: estPasse ? `${jalon.couleur}80` :  jalon.couleur}}
+
+                                  onClick={ () => {props.setJalonModif(jalon.id_jalon)}}
+                                  data-bs-toggle="modal" data-bs-target="#modifModal">
+                                <div className="d-flex justify-content-center"> <FontAwesomeIcon icon="fa-solid fa-triangle-exclamation" beat style={{color: "#ff0000",}} size="lg" className={projetDepasse ? "mt-3" : "d-none"} /> </div>
+
+                            </span>
                             <span className="event" className={jalon.charge == 1 && isBetween ? `event jal-${jalon.id_jalon}` : "d-none"}
                                   onMouseOver={() => handleMouseOver(jalon.id_jalon)}
                                   onMouseOut={() => handleMouseOut(jalon.id_jalon)}
-                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }} ></span>
+                                  style={{ transition: "box-shadow 0.3s ease",backgroundColor: estPasse ? `${jalon.couleur}80` :  jalon.couleur}}
+
+                                  onClick={ () => {props.setJalonModif(jalon.id_jalon)}}
+                                  data-bs-toggle="modal" data-bs-target="#modifModal"
+                            ></span>
 
                         </>
                     )

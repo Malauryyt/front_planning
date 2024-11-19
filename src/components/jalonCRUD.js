@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {getJalons} from "../model/jalon";
-import {creaPosteMachine} from '../model/jalon.js'
+import {creaPosteJalon, getJalons, getJalonById} from "../model/jalon";
 
 function JalonCrud(props) {
 
@@ -73,7 +72,7 @@ function JalonCrud(props) {
                     setErrorModal("La date de commencement du jalon ne peut pas être supérieur à celle de fin.")
             }else{
                     try {
-                        const data = await creaPosteMachine(props.projetEnCours, inputChangeLibelle, props.dateAjout,inputChangeDateCommencement, user.id_user , inputChangeCouleur);
+                        const data = await creaPosteJalon(props.projetEnCours, inputChangeLibelle, props.dateAjout,inputChangeDateCommencement, user.id_user , inputChangeCouleur);
                         if (data == "400") {
                             console.log("data/error : ", data.status);
                             setErrorModal("Vous ne pouvez pas ajouter un jalon à date butoir d'un autre.")
@@ -110,12 +109,39 @@ function JalonCrud(props) {
     // *********************************************************************************
     // Modification de jalon
     // *********************************************************************************
+
+    const[monJalon, setMonJalon] = useState([])
+
     // pour la récupération de jalon on regarde si c'est le premier jalon ou pas
     useEffect( ()=>{
 
-        isFirstJalon()
+        getUnJalon()
 
     }, [props.jalonModif])
+
+    // récupération d'un de mes jalon
+    //récupération des jalons
+    const getUnJalon = async () => {
+
+        if(props.jalonModif != "" ){
+
+            try {
+                const data = await getJalonById(props.jalonModif);
+                if(data == "400"){
+                    console.log("data/error : ", data.status);
+                    errorModal("Impossible de récupérer les projets" )
+                }
+                else{
+                    console.log("mon Jalons :", data)
+                    setMonJalon(data) ;
+                }
+            } catch (error) {
+                console.error("Erreur lors de la récupération des projets :", error);
+            }
+        }
+
+
+    }
 
 
 
@@ -179,7 +205,7 @@ function JalonCrud(props) {
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h1 className="modal-title fs-5" id="exampleModalLabel">Modification jalon</h1>
+                            <h1 className="modal-title fs-5" id="exampleModalLabel">Modification jalon - {monJalon[0].libelle}</h1>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"
                                     id="btnclosemodalJalonAjout"></button>
                         </div>
@@ -188,6 +214,7 @@ function JalonCrud(props) {
                                 {errorModal}
                             </div>
                             {props.jalonModif} - jalon a modifier
+
 
                             <div className="mb-3 row">
                                 <label htmlFor="staticEmail" className="col-sm-5 col-form-label">Date de livraison
