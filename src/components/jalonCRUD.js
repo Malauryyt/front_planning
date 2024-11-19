@@ -76,7 +76,7 @@ function JalonCrud(props) {
                         const data = await creaPosteMachine(props.projetEnCours, inputChangeLibelle, props.dateAjout,inputChangeDateCommencement, user.id_user , inputChangeCouleur);
                         if (data == "400") {
                             console.log("data/error : ", data.status);
-                            setErrorModal("Vous ne pouvez pas ajouter un jalon à date butoire d'un autre.")
+                            setErrorModal("Vous ne pouvez pas ajouter un jalon à date butoir d'un autre.")
                         }
                         else {
 
@@ -107,6 +107,15 @@ function JalonCrud(props) {
 
     };
 
+    // *********************************************************************************
+    // Modification de jalon
+    // *********************************************************************************
+    // pour la récupération de jalon on regarde si c'est le premier jalon ou pas
+    useEffect( ()=>{
+
+        isFirstJalon()
+
+    }, [props.jalonModif])
 
 
 
@@ -158,6 +167,69 @@ function JalonCrud(props) {
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                             <button type="button" className="btn btn-primary" onClick={ ajoutJalon}>Ajouter</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div className="modal fade" id="modifModal" tabIndex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h1 className="modal-title fs-5" id="exampleModalLabel">Modification jalon</h1>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                                    id="btnclosemodalJalonAjout"></button>
+                        </div>
+                        <div className="modal-body">
+                            <div className={errorModal == "" ? "d-none" : "alert alert-danger"} role="alert">
+                                {errorModal}
+                            </div>
+                            {props.jalonModif} - jalon a modifier
+
+                            <div className="mb-3 row">
+                                <label htmlFor="staticEmail" className="col-sm-5 col-form-label">Date de livraison
+                                    :</label>
+                                <div className="col-sm-6">
+                                    <input type="text" readOnly className="form-control-plaintext" id="staticEmail"
+                                           value={props.dateAjout}></input>
+                                </div>
+                            </div>
+                            <div className={dateCommencement === "oui" ? "mb-3 row" : "d-none"}>
+                                <label htmlFor="staticEmail" className="col-sm-5 col-form-label">Date de commencement
+                                    :</label>
+                                <div className="col-sm-6">
+                                    <input type="date" className="form-control" id="exampleColorInput"
+                                           value={inputChangeDateCommencement}
+                                           onChange={handleChangeDateCommencemment}></input>
+                                </div>
+                            </div>
+                            <div className="mb-3 row">
+                                <label htmlFor="inputPassword" className="col-sm-5 col-form-label">Libellé :</label>
+                                <div className="col-sm-6">
+                                    <input type="text" className="form-control" id="inputPassword"
+                                           value={inputChangeLibelle} onChange={handleChangeLibelle}></input>
+                                </div>
+                            </div>
+                            <div className="mb-3 row">
+                                <label htmlFor="staticEmail" className="col-sm-5 col-form-label">Couleur du jalon
+                                    :</label>
+                                <div className="col-sm-6">
+                                    <input type="color" className="form-control form-control-color"
+                                           id="exampleColorInput"
+                                           value="#563d7c" title="Choose your color" value={inputChangeCouleur}
+                                           onChange={handleChangeCouleur}></input>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                            <button type="button" className="btn btn-primary" onClick={ajoutJalon}>Ajouter</button>
                         </div>
                     </div>
                 </div>

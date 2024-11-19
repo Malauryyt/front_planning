@@ -27,6 +27,7 @@ function Semaine(props) {
     const [jalons, setJalons] = useState(props.jalons)
 
 
+
     useEffect( ()=>{
 
         setDateDuCalendrier(getDaysinCalendars(props.annee, props.mois ))
@@ -44,6 +45,26 @@ function Semaine(props) {
     }, [props.jalons])
 
     const daysOfWeekOrder = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
+    //affichage de jalon pour la modif
+    // Gestionnaire d'événements au survol
+    const handleMouseOver = (id) => {
+        // Sélectionner tous les éléments ayant la classe spécifique
+        const elements = document.querySelectorAll(`.jal-${id}`);
+        elements.forEach((el) => {
+            el.style.transition = "transform 0.3s ease-in-out";
+            el.style.transform = "scaleY(2)";
+        });
+    };
+
+    // Gestionnaire d'événements lorsque la souris quitte
+    const handleMouseOut = (id) => {
+        // Réinitialiser le style des éléments
+        const elements = document.querySelectorAll(`.jal-${id}`);
+        elements.forEach((el) => {
+            el.style.transform = "scaleY(1)";
+        });
+    };
 
 
     return (<>
@@ -77,13 +98,33 @@ function Semaine(props) {
                         estFin = true;
                     }
 
+                    var nomClasse = "jal" + jalon.id_jalon
+
                     return (
                         <>
 
-                            <span className={isBetween ? "event event-multiday" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className={estDebut === true ? "event event-multiday-start eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className={estFin === true ? "event event-multiday-finish eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className="event" className={jalon.charge == 1 && isBetween ? "event" : "d-none"} style={{ backgroundColor: jalon.couleur  }} ></span>
+                            <span className={isBetween ? `event event-multiday jal-${jalon.id_jalon}` : "d-none"}
+                                  onMouseOver={() => handleMouseOver(jalon.id_jalon)}
+                                  onMouseOut={() => handleMouseOut(jalon.id_jalon)}
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }}
+
+                                  onClick={ () => {props.setJalonModif(jalon.id_jalon)}}
+                                  data-bs-toggle="modal" data-bs-target="#modifModal"
+
+                            ></span>
+                            <span className={estDebut === true ? `event event-multiday-start eventclass jal-${jalon.id_jalon}` : "d-none"}
+                                  onMouseOver={() => handleMouseOver(jalon.id_jalon)}
+                                  onMouseOut={() => handleMouseOut(jalon.id_jalon)}
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }} ></span>
+                            <span className={estFin === true ? `event event-multiday-finish eventclass jal-${jalon.id_jalon}` : "d-none"}
+                                  onMouseOver={() => handleMouseOver(jalon.id_jalon)}
+                                  onMouseOut={() => handleMouseOut(jalon.id_jalon)}
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }}
+                            ></span>
+                            <span className="event" className={jalon.charge == 1 && isBetween ? `event jal-${jalon.id_jalon}` : "d-none"}
+                                  onMouseOver={() => handleMouseOver(jalon.id_jalon)}
+                                  onMouseOut={() => handleMouseOut(jalon.id_jalon)}
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }} ></span>
 
                         </>
                     )
@@ -121,10 +162,26 @@ function Semaine(props) {
                     return (
                         <>
 
-                            <span className={isBetween ? "event event-multiday" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className={estDebut === true ? "event event-multiday-start eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className={estFin === true ? "event event-multiday-finish eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className="event" className={jalon.charge == 1 && isBetween ? "event" : "d-none"} style={{ backgroundColor: jalon.couleur  }} ></span>
+                            <span className={isBetween ? `event event-multiday jal-${jalon.id_jalon}` : "d-none"}
+                                  onMouseOver={() => handleMouseOver(jalon.id_jalon)}
+                                  onMouseOut={() => handleMouseOut(jalon.id_jalon)}
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }}
+
+
+                            ></span>
+                            <span className={estDebut === true ? `event event-multiday-start eventclass jal-${jalon.id_jalon}` : "d-none"}
+                                  onMouseOver={() => handleMouseOver(jalon.id_jalon)}
+                                  onMouseOut={() => handleMouseOut(jalon.id_jalon)}
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }} ></span>
+                            <span className={estFin === true ? `event event-multiday-finish eventclass jal-${jalon.id_jalon}` : "d-none"}
+                                  onMouseOver={() => handleMouseOver(jalon.id_jalon)}
+                                  onMouseOut={() => handleMouseOut(jalon.id_jalon)}
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }}
+                            ></span>
+                            <span className="event" className={jalon.charge == 1 && isBetween ? `event jal-${jalon.id_jalon}` : "d-none"}
+                                  onMouseOver={() => handleMouseOver(jalon.id_jalon)}
+                                  onMouseOut={() => handleMouseOut(jalon.id_jalon)}
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }} ></span>
 
                         </>
                     )
@@ -161,10 +218,26 @@ function Semaine(props) {
                     return (
                         <>
 
-                            <span className={isBetween ? "event event-multiday" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className={estDebut === true ? "event event-multiday-start eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className={estFin === true ? "event event-multiday-finish eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className="event" className={jalon.charge == 1 && isBetween ? "event" : "d-none"} style={{ backgroundColor: jalon.couleur  }} ></span>
+                            <span className={isBetween ? `event event-multiday jal-${jalon.id_jalon}` : "d-none"}
+                                  onMouseOver={() => handleMouseOver(jalon.id_jalon)}
+                                  onMouseOut={() => handleMouseOut(jalon.id_jalon)}
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }}
+
+
+                            ></span>
+                            <span className={estDebut === true ? `event event-multiday-start eventclass jal-${jalon.id_jalon}` : "d-none"}
+                                  onMouseOver={() => handleMouseOver(jalon.id_jalon)}
+                                  onMouseOut={() => handleMouseOut(jalon.id_jalon)}
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }} ></span>
+                            <span className={estFin === true ? `event event-multiday-finish eventclass jal-${jalon.id_jalon}` : "d-none"}
+                                  onMouseOver={() => handleMouseOver(jalon.id_jalon)}
+                                  onMouseOut={() => handleMouseOut(jalon.id_jalon)}
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }}
+                            ></span>
+                            <span className="event" className={jalon.charge == 1 && isBetween ? `event jal-${jalon.id_jalon}` : "d-none"}
+                                  onMouseOver={() => handleMouseOver(jalon.id_jalon)}
+                                  onMouseOut={() => handleMouseOut(jalon.id_jalon)}
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }} ></span>
 
                         </>
                     )
@@ -201,10 +274,26 @@ function Semaine(props) {
                     return (
                         <>
 
-                            <span className={isBetween ? "event event-multiday" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className={estDebut === true ? "event event-multiday-start eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className={estFin === true ? "event event-multiday-finish eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className="event" className={jalon.charge == 1 && isBetween ? "event" : "d-none"} style={{ backgroundColor: jalon.couleur  }} ></span>
+                            <span className={isBetween ? `event event-multiday jal-${jalon.id_jalon}` : "d-none"}
+                                  onMouseOver={() => handleMouseOver(jalon.id_jalon)}
+                                  onMouseOut={() => handleMouseOut(jalon.id_jalon)}
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }}
+
+
+                            ></span>
+                            <span className={estDebut === true ? `event event-multiday-start eventclass jal-${jalon.id_jalon}` : "d-none"}
+                                  onMouseOver={() => handleMouseOver(jalon.id_jalon)}
+                                  onMouseOut={() => handleMouseOut(jalon.id_jalon)}
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }} ></span>
+                            <span className={estFin === true ? `event event-multiday-finish eventclass jal-${jalon.id_jalon}` : "d-none"}
+                                  onMouseOver={() => handleMouseOver(jalon.id_jalon)}
+                                  onMouseOut={() => handleMouseOut(jalon.id_jalon)}
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }}
+                            ></span>
+                            <span className="event" className={jalon.charge == 1 && isBetween ? `event jal-${jalon.id_jalon}` : "d-none"}
+                                  onMouseOver={() => handleMouseOver(jalon.id_jalon)}
+                                  onMouseOut={() => handleMouseOut(jalon.id_jalon)}
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }} ></span>
 
                         </>
                     )
@@ -241,10 +330,26 @@ function Semaine(props) {
                     return (
                         <>
 
-                            <span className={isBetween ? "event event-multiday" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className={estDebut === true ? "event event-multiday-start eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className={estFin === true ? "event event-multiday-finish eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className="event" className={jalon.charge == 1 && isBetween ? "event" : "d-none"} style={{ backgroundColor: jalon.couleur  }} ></span>
+                            <span className={isBetween ? `event event-multiday jal-${jalon.id_jalon}` : "d-none"}
+                                  onMouseOver={() => handleMouseOver(jalon.id_jalon)}
+                                  onMouseOut={() => handleMouseOut(jalon.id_jalon)}
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }}
+
+
+                            ></span>
+                            <span className={estDebut === true ? `event event-multiday-start eventclass jal-${jalon.id_jalon}` : "d-none"}
+                                  onMouseOver={() => handleMouseOver(jalon.id_jalon)}
+                                  onMouseOut={() => handleMouseOut(jalon.id_jalon)}
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }} ></span>
+                            <span className={estFin === true ? `event event-multiday-finish eventclass jal-${jalon.id_jalon}` : "d-none"}
+                                  onMouseOver={() => handleMouseOver(jalon.id_jalon)}
+                                  onMouseOut={() => handleMouseOut(jalon.id_jalon)}
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }}
+                            ></span>
+                            <span className="event" className={jalon.charge == 1 && isBetween ? `event jal-${jalon.id_jalon}` : "d-none"}
+                                  onMouseOver={() => handleMouseOver(jalon.id_jalon)}
+                                  onMouseOut={() => handleMouseOut(jalon.id_jalon)}
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }} ></span>
 
                         </>
                     )
@@ -281,10 +386,26 @@ function Semaine(props) {
                     return (
                         <>
 
-                            <span className={isBetween ? "event event-multiday" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className={estDebut === true ? "event event-multiday-start eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className={estFin === true ? "event event-multiday-finish eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className="event" className={jalon.charge == 1 && isBetween ? "event" : "d-none"} style={{ backgroundColor: jalon.couleur  }} ></span>
+                            <span className={isBetween ? `event event-multiday jal-${jalon.id_jalon}` : "d-none"}
+                                  onMouseOver={() => handleMouseOver(jalon.id_jalon)}
+                                  onMouseOut={() => handleMouseOut(jalon.id_jalon)}
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }}
+
+
+                            ></span>
+                            <span className={estDebut === true ? `event event-multiday-start eventclass jal-${jalon.id_jalon}` : "d-none"}
+                                  onMouseOver={() => handleMouseOver(jalon.id_jalon)}
+                                  onMouseOut={() => handleMouseOut(jalon.id_jalon)}
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }} ></span>
+                            <span className={estFin === true ? `event event-multiday-finish eventclass jal-${jalon.id_jalon}` : "d-none"}
+                                  onMouseOver={() => handleMouseOver(jalon.id_jalon)}
+                                  onMouseOut={() => handleMouseOut(jalon.id_jalon)}
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }}
+                            ></span>
+                            <span className="event" className={jalon.charge == 1 && isBetween ? `event jal-${jalon.id_jalon}` : "d-none"}
+                                  onMouseOver={() => handleMouseOver(jalon.id_jalon)}
+                                  onMouseOut={() => handleMouseOut(jalon.id_jalon)}
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }} ></span>
 
                         </>
                     )
@@ -321,10 +442,26 @@ function Semaine(props) {
                     return (
                         <>
 
-                            <span className={isBetween ? "event event-multiday" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className={estDebut === true ? "event event-multiday-start eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className={estFin === true ? "event event-multiday-finish eventclass" : "d-none"} style={{ backgroundColor: jalon.couleur }} ></span>
-                            <span className="event" className={jalon.charge == 1 && isBetween ? "event" : "d-none"} style={{ backgroundColor: jalon.couleur  }} ></span>
+                            <span className={isBetween ? `event event-multiday jal-${jalon.id_jalon}` : "d-none"}
+                                  onMouseOver={() => handleMouseOver(jalon.id_jalon)}
+                                  onMouseOut={() => handleMouseOut(jalon.id_jalon)}
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }}
+
+
+                            ></span>
+                            <span className={estDebut === true ? `event event-multiday-start eventclass jal-${jalon.id_jalon}` : "d-none"}
+                                  onMouseOver={() => handleMouseOver(jalon.id_jalon)}
+                                  onMouseOut={() => handleMouseOut(jalon.id_jalon)}
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }} ></span>
+                            <span className={estFin === true ? `event event-multiday-finish eventclass jal-${jalon.id_jalon}` : "d-none"}
+                                  onMouseOver={() => handleMouseOver(jalon.id_jalon)}
+                                  onMouseOut={() => handleMouseOut(jalon.id_jalon)}
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }}
+                            ></span>
+                            <span className="event" className={jalon.charge == 1 && isBetween ? `event jal-${jalon.id_jalon}` : "d-none"}
+                                  onMouseOver={() => handleMouseOver(jalon.id_jalon)}
+                                  onMouseOut={() => handleMouseOut(jalon.id_jalon)}
+                                  style={{ transition: "box-shadow 0.3s ease", backgroundColor: jalon.couleur }} ></span>
 
                         </>
                     )
