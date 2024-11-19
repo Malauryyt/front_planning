@@ -22,6 +22,9 @@ function Planning(props) {
     const [annee, setAnnee] = useState(today.getFullYear());
     const[nomMois, setNomMois] = useState(monthName);
 
+    //modification jalon
+    const [jalonModif, setJalonModif] = useState("")
+
 
     useEffect( ()=>{
         console.log("Je regarde mon calendrier pour le " ,  mois)
@@ -85,7 +88,7 @@ function Planning(props) {
     // Fonction pour aller au mois suivant (Bonus)
     const moisPrece = () => {
         console.log("j'ajoute un mois")
-        if (mois === 11) {
+        if (mois === 11 ){
             // Si on est en Décembre, on passe à Janvier de l'année suivante
             setMois(0); // Janvier
             setAnnee(annee + 1);
@@ -162,7 +165,7 @@ function Planning(props) {
 
                             return (
                                 <>
-                                    <Semaine calendrier={calendrier} index={index} jalons={jalons} mois={mois} annee={annee} setDateAjout={setDateAjout}/>
+                                    <Semaine calendrier={calendrier} index={index} jalons={jalons} mois={mois} annee={annee} setDateAjout={setDateAjout} setJalonModif={setJalonModif} jalonModif={jalonModif}/>
                                 </>
                             )
                         }
@@ -183,7 +186,8 @@ function Planning(props) {
             </div>
 
             <JalonCrud setDateAjout={setDateAjout} dateAjout={dateAjout} projetEnCours={props.projetEnCours}
-                       jalons={jalons} setMettreAJour={setMettreAJour} mettreAJour={mettreAJour} />
+                       jalons={jalons} setMettreAJour={setMettreAJour} mettreAJour={mettreAJour}
+                       setJalonModif={setJalonModif} jalonModif={jalonModif}/>
 
         </>
     )
