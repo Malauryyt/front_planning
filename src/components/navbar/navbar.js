@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {getMine, getOneprojet, getProjetsSuivit} from '../model/projet.js'
+import {getMine, getOneprojet, getProjetsSuivit} from '../../model/projet.js'
 
 function Navbar(props) {
 
@@ -115,28 +115,28 @@ function Navbar(props) {
                             </li>
 
                             <li className="projetEncours nav-item dropdown ">
-                                <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                <a className="nav-link dropdown-toggle"  role="button" data-bs-toggle="dropdown"
                                    aria-expanded="false">
                                     {projetEncours}
                                 </a>
 
                                 <ul className="dropdown-menu">
-                                    <li ><a className="dropdown-item" href="#" onClick={() => { changeProjet(0) }}>Tous les projets </a></li>
+                                    <li ><a className="dropdown-item pointer"  onClick={() => { changeProjet(0) }}>Tous les projets </a></li>
                                     {projets.length > 0 && projets.map((projet, cpt) => {
                                         return (
-                                            <li ><a className="dropdown-item" href="#" onClick={() => { changeProjet(projet.id_projet) }}>{projet.libelle} - {projet.trigramme}</a></li>
+                                            <li ><a className="dropdown-item pointer"  onClick={() => { changeProjet(projet.id_projet) }}>{projet.libelle} - {projet.trigramme}</a></li>
                                         )
                                     })}
                                     {projetSuivi.length > 0 && projetSuivi.map((projet, cpt) => {
                                         return (
-                                            <li ><a className="dropdown-item" href="#" onClick={() => { changeProjet(projet.id_projet) }}>{projet.libelle} - {projet.trigramme}</a></li>
+                                            <li ><a className="dropdown-item pointer"  onClick={() => { changeProjet(projet.id_projet) }}>{projet.libelle} - {projet.trigramme}</a></li>
                                         )
                                     })}
 
                                     <li>
                                         <hr className="dropdown-divider"></hr>
                                     </li>
-                                    <li><a className="dropdown-item" href="#">Something else here</a></li>
+                                    <li><a className="dropdown-item" >Something else here</a></li>
                                 </ul>
                             </li>
                         </ul>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import Navbar from "../components/navbar.js";
+import Navbar from "../components/navbar/navbar.js";
 
-import Planning from "../components/planning"
+import Planning from "../components/planning/planning"
 import Connexion from "../components/connexion";
 
 

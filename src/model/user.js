@@ -45,3 +45,30 @@ export async function connexionApi(user, mdp) {
     }
 
 }
+
+export async function getAllUser() {
+    try {
+        return fetch(route +"user/getAll", {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        })
+            // la on transforme en json
+            .then(
+                res => {
+                    if (res.status == "400") {
+                        return res.status
+                    } else {
+                        return res.json()
+                    }
+                }
+            )
+            .then(data => {
+                return data;
+            });
+        // ce then la return la reponse
+    }
+    catch (error) {
+        return "j'ai une erreur" + error
+    }
+
+}

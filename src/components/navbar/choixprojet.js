@@ -8,17 +8,17 @@ function Navbar(props) {
 
     return (<>
                             <li className="nav-item dropdown">
-                                <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                <a className="nav-link dropdown-toggle" href="src/components#" role="button" data-bs-toggle="dropdown"
                                    aria-expanded="false">
                                     Projets choisit
                                 </a>
                                 <ul className="dropdown-menu">
-                                    <li><a className="dropdown-item" href="#">Action</a></li>
-                                    <li><a className="dropdown-item" href="#">Another action</a></li>
+                                    <li><a className="dropdown-item" href="src/components#">Action</a></li>
+                                    <li><a className="dropdown-item" href="src/components#">Another action</a></li>
                                     <li>
                                         <hr className="dropdown-divider"></hr>
                                     </li>
-                                    <li><a className="dropdown-item" href="#">Something else here</a></li>
+                                    <li><a className="dropdown-item" href="src/components#">Something else here</a></li>
                                 </ul>
                             </li>
 
