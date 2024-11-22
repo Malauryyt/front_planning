@@ -89,3 +89,39 @@ export async function creaPosteJalon(id_projet, libelle, dateLivPrev, dateCommen
     }
 
 }
+
+export async function modifJalon(id_jalon , libelle, date_liv_prev,date_com, id_user,  id_projet, etat, couleur  ) {
+    try{
+        return fetch(route +"jalon/modif", {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+
+                "id_jalon": id_jalon,
+                "libelle" : libelle,
+                "date_liv_prev": date_liv_prev,
+                "date_com": date_com,
+                "id_user" : id_user,
+                "id_projet": id_projet,
+                "etat": etat,
+                "couleur" : couleur
+
+            })
+        })
+            // la on transforme en json
+            .then(
+                res =>{
+                    return res.status
+                }
+            )
+            .then(data => {
+                // console.log(data);
+                return data;
+            });
+        // ce then la return la reponse
+    }
+    catch(error){
+        return "j'ai une erreur" +  error
+    }
+
+}

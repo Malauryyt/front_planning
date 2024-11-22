@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {getJalons} from '../model/jalon.js'
+import {getJalons} from '../../model/jalon.js'
 import Semaine from "./semaineJalon";
 import JalonCrud from "./jalonCRUD"
 
@@ -22,7 +22,7 @@ function Planning(props) {
     const [annee, setAnnee] = useState(today.getFullYear());
     const[nomMois, setNomMois] = useState(monthName);
 
-    //modification jalon
+    //modification jalon on inti à des valeur bidon
     const [jalonModif, setJalonModif] = useState("")
 
 

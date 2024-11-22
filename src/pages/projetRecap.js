@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Navbar from "../components/navbar.js";
+import Navbar from "../components/navbar/navbar.js";
 import Projets from "../components/projets"
 import Connexion from "../components/connexion";
 
