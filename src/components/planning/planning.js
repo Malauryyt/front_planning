@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {getJalons} from '../../model/jalon.js'
 import Semaine from "./semaineJalon";
 import JalonCrud from "./jalonCRUD"
+import InfoJalon from "./infoJalon"
 
 
 function Planning(props) {
@@ -180,10 +181,11 @@ function Planning(props) {
                         </>
                             )
 
-
                 } )}
                 </div>
             </div>
+
+            <InfoJalon />
 
             <JalonCrud setDateAjout={setDateAjout} dateAjout={dateAjout} projetEnCours={props.projetEnCours}
                        jalons={jalons} setMettreAJour={setMettreAJour} mettreAJour={mettreAJour}

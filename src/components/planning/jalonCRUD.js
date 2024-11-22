@@ -117,7 +117,7 @@ function JalonCrud(props) {
     const [etatModif, setEtatModif] = useState("")
     const [couleurModif, setCouleurModif] = useState("")
 
-
+    const [isLast , setIsLast] = useState("non")
     const [users, setUsers] = useState("")
 
     const[monJalon, setMonJalon] = useState([{
@@ -136,6 +136,7 @@ function JalonCrud(props) {
 
         getUnJalon()
         isFirst()
+        islast()
 
     }, [props.jalonModif])
 
@@ -180,6 +181,20 @@ function JalonCrud(props) {
             console.log(index)
             if(index === 0){
                 setDateCommencement("oui")
+            }
+        }
+    };
+
+    const islast = () => {
+        if(props.jalons ){
+            const tabJalon = props.jalons
+            const index = tabJalon.findIndex(jalon => jalon.id_jalon === props.jalonModif);
+            console.log(index)
+            if(index === tabJalon.length - 1){
+                setIsLast("oui")
+            }
+            else{
+                setIsLast("non")
             }
         }
     };
@@ -407,11 +422,12 @@ function JalonCrud(props) {
                                 </div>
 
 
-
                             </div>
                             <div className="modal-footer d-flex justify-content-between">
-                                <button type="button" className="btn btn-danger" data-bs-dismiss="modal">Supprimer
-                                </button>
+                                <div>
+                                    <button type="button" className={dateCommencement === "oui" || isLast === "oui" ? "btn btn-danger" : "d-none"} data-bs-dismiss="modal">Supprimer
+                                    </button>
+                                </div>
                                 <button type="button" className="btn btn-primary" onClick={modificationJalon}>Modifier</button>
 
 
