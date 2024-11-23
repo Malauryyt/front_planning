@@ -185,7 +185,11 @@ function Planning(props) {
                 </div>
             </div>
 
-            <InfoJalon />
+            {jalonModif !== "" && (
+                // Contenu ou composant à afficher si la condition est vraie
+                <InfoJalon jalonModif={jalonModif}/>
+            )}
+
 
             <JalonCrud setDateAjout={setDateAjout} dateAjout={dateAjout} projetEnCours={props.projetEnCours}
                        jalons={jalons} setMettreAJour={setMettreAJour} mettreAJour={mettreAJour}
