@@ -31,6 +31,9 @@ export default function Browser() {
         if (sessionStorage.getItem("token") !== null) {
             setToken(sessionStorage.getItem("token"));
         }
+        if (sessionStorage.getItem("projet") !== null) {
+            setProjet(sessionStorage.getItem("projet"));
+        }
     }, []);
 
 
@@ -79,6 +82,19 @@ export default function Browser() {
     // affichage du projet en cours
     const [projet, setProjet] = useState(0);
 
+    useEffect(() => {
+        sessionStorage.getItem("projet") == null ?
+            sessionStorage.setItem("projet", [projet]) : setUser(sessionStorage.getItem("projet"));
+    }, [projet]);
+
+    const initProjet = (projet) => {
+
+        sessionStorage.setItem('projet', JSON.stringify(projet));
+        var obj = JSON.parse(sessionStorage.projet);
+        setProjet(obj)
+
+        console.log("dans le browser mon projet" + projet)
+    };
 
 
     return (<>
@@ -86,8 +102,8 @@ export default function Browser() {
                 <Routes>
                     <Route path='/' element={<TableauDeBord user={user} projet={projet} setProjet={setProjet}/>} />
                     <Route path='/connexion' element={<Connexion user={user} setUser={initUser}  />} />
-                    <Route path='/projet' element={<ProjetRecap user={user} setUser={initUser}  projet={projet} setProjet={setProjet} />} />
-                    <Route path='/planning' element={<Jalon user={user} setUser={initUser}  projet={projet} setProjet={setProjet} />} />
+                    <Route path='/projet' element={<ProjetRecap user={user} setUser={initUser}  projet={projet} setProjet={initProjet} />} />
+                    <Route path='/planning' element={<Jalon user={user} setUser={initUser}  projet={projet} setProjet={initProjet} />} />
 
                 </Routes>
             </BrowserRouter>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {creaPosteJalon, getJalons, getJalonById, modifJalon} from "../../model/jalon";
+import {creaPosteJalon, getJalons, getJalonById, modifJalon, suppJalon} from "../../model/jalon";
 import {getAllUser} from "../../model/user";
 
 function JalonCrud(props) {
@@ -277,6 +277,40 @@ function JalonCrud(props) {
 
     };
 
+    // *********************************************************************************
+    // Supression de jalon
+    // *********************************************************************************
+    //modification de mon jalon
+    const [supp, setSupp] = useState("non")
+    const validationSupp = () =>{
+        setSupp("oui")
+    }
+    const supressionJalon = async () => {
+
+        try {
+            const data = await suppJalon(monJalon[0].id_jalon);
+            if (data == "400") {
+                console.log("data/error : ", data.status);
+                setErrorModal("La modification n'a pas pu être effectuée correctement.")
+            }
+            else {
+
+                // Ferme la modal
+                var closeModalBtn = document.getElementById("btnclosemodalJalonModif");
+                closeModalBtn.click();
+                setErrorModal("");
+                setSupp("non")
+
+                props.setMettreAJour(!props.mettreAJour)
+
+            }
+        } catch (error) {
+            console.error("Erreur lors de la supression de jalon :", error);
+            setErrorModal("La modification n'a pas pu être effectuée correctement.")
+        }
+
+    };
+
 
         return (<>
 
@@ -421,11 +455,21 @@ function JalonCrud(props) {
 
                                 </div>
 
+                                <div className={supp === "oui" ? "alert alert-danger " : "d-none"} role="alert">
+                                    <p>Êtes-vous sûr de vouloir supprimer ce jalon ?</p>
+                                    <div className="modal-footer d-flex justify-content-center">
+
+                                        <button type="button" className="btn btn-secondary" onClick={() => {setSupp("non")}}>Non </button>
+                                        <button type="button" className="btn btn-success" onClick={() => {supressionJalon()}} >Oui </button>
+                                    </div>
+
+                                </div>
+
 
                             </div>
                             <div className="modal-footer d-flex justify-content-between">
                                 <div>
-                                    <button type="button" className={dateCommencement === "oui" || isLast === "oui" ? "btn btn-danger" : "d-none"} data-bs-dismiss="modal">Supprimer
+                                    <button type="button" className={dateCommencement === "oui" || isLast === "oui" ? "btn btn-danger" : "d-none"} onClick={validationSupp}>Supprimer
                                     </button>
                                 </div>
                                 <button type="button" className="btn btn-primary" onClick={modificationJalon}>Modifier</button>
