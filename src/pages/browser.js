@@ -6,6 +6,7 @@ import { TableauDeBord } from './tableauDeBord.js';
 import Connexion from "../components/connexion";
 import {ProjetRecap} from "./projetRecap";
 import {Jalon} from "./jalon.js";
+import {DetailPLanning} from "./detailPLanning.js";
 
 export default function Browser() {
 
@@ -104,6 +105,7 @@ export default function Browser() {
                     <Route path='/connexion' element={<Connexion user={user} setUser={initUser}  />} />
                     <Route path='/projet' element={<ProjetRecap user={user} setUser={initUser}  projet={projet} setProjet={initProjet} />} />
                     <Route path='/planning' element={<Jalon user={user} setUser={initUser}  projet={projet} setProjet={initProjet} />} />
+                    <Route path='/detailPLanning' element={<DetailPLanning user={user} setUser={initUser}  projet={projet} setProjet={initProjet} />} />
 
                 </Routes>
             </BrowserRouter>

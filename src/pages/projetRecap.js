@@ -16,9 +16,7 @@ export function ProjetRecap(props) {
             <Navbar user={props.user} projetEnCours={props.projet} setProjetEnCours={props.setProjet}/>
 
             <div className="conteneur container-xl">
-                <div>
-                   coucou
-                </div>
+
 
             </div>
 

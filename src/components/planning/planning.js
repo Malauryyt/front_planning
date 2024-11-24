@@ -28,22 +28,15 @@ function Planning(props) {
 
 
     useEffect( ()=>{
-        console.log("Je regarde mon calendrier pour le " ,  mois)
         setCalendrier(getCalendarDays(annee, mois )); // Génère les jours du mois
-
         const date = new Date(new Date().getFullYear(), mois);
-
         setNomMois(Intl.DateTimeFormat('fr-FR', { month: 'long' }).format(date) ) ;
-        console.log("mise à jour de mon calendrier")
-        console.log(mois)
 
 
     }, [annee, mois])
 
     // récupération de mes jalons selon le projets choisis
     useEffect( ()=>{
-
-        console.log("mise à jour de mes jalons ")
         getJalonProjet()
 
     }, [props.projetEnCours, mettreAJour])
@@ -69,6 +62,9 @@ function Planning(props) {
             } catch (error) {
                 console.error("Erreur lors de la récupération des projets :", error);
             }
+        }
+        else{
+            setJalon([])
         }
 
 

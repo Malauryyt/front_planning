@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {creaPosteJalon, getJalons, getJalonById, modifJalon, suppJalon} from "../../model/jalon";
 import {getAllUser} from "../../model/user";
+import { useNavigate } from 'react-router-dom';
 
 function JalonCrud(props) {
 
@@ -311,6 +312,18 @@ function JalonCrud(props) {
 
     };
 
+    // *********************************************************************************
+    // détails de jalon
+    // *********************************************************************************
+    const navigate = useNavigate();
+    const redirectToAboutPage = (id_jalon) => {
+        localStorage.setItem('idJalon', id_jalon);
+        var closeModalBtn = document.getElementById("btnclosemodalJalonModif");
+        closeModalBtn.click();
+        navigate('/detailPlanning');
+    };
+
+
 
         return (<>
 
@@ -468,10 +481,13 @@ function JalonCrud(props) {
 
                             </div>
                             <div className="modal-footer d-flex justify-content-between">
-                                <div>
-                                    <button type="button" className={dateCommencement === "oui" || isLast === "oui" ? "btn btn-danger" : "d-none"} onClick={validationSupp}>Supprimer
-                                    </button>
-                                </div>
+
+                                <button type="button" className={dateCommencement === "oui" || isLast === "oui" ? "btn btn-danger" : "d-none"} onClick={validationSupp}>Supprimer
+                                </button>
+
+
+                                <button type="button" className="btn btn-secondary" onClick={() => {redirectToAboutPage(monJalon[0].id_jalon)}}>Détail</button>
+
                                 <button type="button" className="btn btn-primary" onClick={modificationJalon}>Modifier</button>
 
 
