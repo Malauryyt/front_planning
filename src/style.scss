@@ -44,7 +44,7 @@ $marker-size: 9px;
 
 $steps: #46b8e9;
 $colors: #46b8e9,  #ee73f4 ,   #90e25b, #3ee9d1,  #a95be2,
-      red,  #ee73f4 ,   #90e25b,#3ee9d1,  #a95be2;
+red,  #ee73f4 ,   #90e25b,#3ee9d1,  #a95be2;
 $timeline: #bdbdbd;
 
 /* Calculations */
@@ -244,7 +244,7 @@ $counter: $items - $rows + 2;
     }
     @for $i from 1 through $items {
       &--step#{$i} {
-        $color: nth($colors, ((($i - 1) % 10) + 1));
+        $color: nth($colors, ((($i - 1) % 7) + 1));
         background-color: $color;
         .head::after {
           border-color: $color;
@@ -253,3 +253,28 @@ $counter: $items - $rows + 2;
     }
   }
 }
+
+$items: 7;
+
+#timeline {
+  .demo-card {
+    @for $i from 1 through $items {
+      &--step#{$i} {
+        // Applique une variable CSS par index
+        --current-color: nth(var(--colors), $i);
+
+        background-color: var(--current-color);
+
+        .head::after {
+          border-color: var(--current-color);
+        }
+      }
+    }
+  }
+}
+
+/* ************************************************************************ */
+//tache
+/* ************************************************************************ */
+
+

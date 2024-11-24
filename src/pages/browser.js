@@ -7,6 +7,7 @@ import Connexion from "../components/connexion";
 import {ProjetRecap} from "./projetRecap";
 import {Jalon} from "./jalon.js";
 import {DetailPLanning} from "./detailPLanning.js";
+import {DetailJalon, InfoGlobalJalon, InfoJalon} from "./detailJalon";
 
 export default function Browser() {
 
@@ -106,6 +107,7 @@ export default function Browser() {
                     <Route path='/projet' element={<ProjetRecap user={user} setUser={initUser}  projet={projet} setProjet={initProjet} />} />
                     <Route path='/planning' element={<Jalon user={user} setUser={initUser}  projet={projet} setProjet={initProjet} />} />
                     <Route path='/detailPLanning' element={<DetailPLanning user={user} setUser={initUser}  projet={projet} setProjet={initProjet} />} />
+                    <Route path='/InfoGlobalJalon' element={<InfoGlobalJalon user={user} setUser={initUser}  projet={projet} setProjet={initProjet} />} />
 
                 </Routes>
             </BrowserRouter>

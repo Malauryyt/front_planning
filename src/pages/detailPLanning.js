@@ -19,6 +19,7 @@ export function DetailPLanning(props) {
 
             <div className="conteneur container-xl">
                 <div className={"m-3"}>
+
                     <JalonChrono projetEnCours={props.projet} setProjetEnCours={props.setProjet}/>
                 </div>
             </div>

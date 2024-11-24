@@ -242,7 +242,22 @@ function JalonCrud(props) {
     const modificationJalon = async () => {
         // console.log(inputPrixCrea + inputTypeCrea + inputQteCrea + inputResCrea)
 
-        if (libelleModif!= "" && couleurModif != "") {
+        // le jalon ne peut pas etre en cours ou terminé si le jalon d'avant ne l'ai pas
+
+        const tabJalon = props.jalons
+        const index = tabJalon.findIndex(jalon => jalon.id_jalon === monJalon[0].id_jalon);
+        if( index  !== 0 ){
+
+            const prece = tabJalon.find((jalon, i) => i === index - 1);
+            if(prece.etat != 2 && etatModif > 0 ){
+                setErrorModal("Le jalon ne peut pas être en cours ou commencer si le jalon précédent n'est pas terminé. Vérifiez l'état du jalon précédent.")
+                return;
+            }
+
+        }
+
+
+        if (libelleModif!= "" && couleurModif != "" ) {
 
             if(date_comModif != "" && new Date(date_comModif).getTime() > new Date(date_liv_prev).getTime()){
 
@@ -271,10 +286,10 @@ function JalonCrud(props) {
 
             }
         }
-
         else {
             setErrorModal("Vous devez remplir tous les champs.")
         }
+
 
     };
 
@@ -320,7 +335,7 @@ function JalonCrud(props) {
         localStorage.setItem('idJalon', id_jalon);
         var closeModalBtn = document.getElementById("btnclosemodalJalonModif");
         closeModalBtn.click();
-        navigate('/detailPlanning');
+        navigate('/InfoGlobalJalon');
     };
 
 
