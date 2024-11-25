@@ -79,17 +79,14 @@ function TacheContainer(props) {
 
     return (<>
 
-        <div className="conteneur container-xl taches ">
-
-            <h3> Taches </h3>
-            <div className="list-group col-9">
+            <div className="list-group mt-3">
                 {mesTachesInfo.length > 0 &&
                     mesTachesInfo.map((tache, cpt) => {
 
                         var couleur;
                         switch (tache.statut) {
                             case 0:
-                                couleur = "green";
+                                couleur = "gray";
                                 break;
                             case 50:
                                 couleur = "orange";
@@ -108,11 +105,6 @@ function TacheContainer(props) {
 
                 }
             </div>
-
-
-
-
-        </div>
 
         </>
 

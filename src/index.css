@@ -200,18 +200,10 @@ header {
 /* tache */
 /* ###################################################################################################################*/
 
-.timeline {
-  height: 300px;
-  width: 200px;
-  overflow-y: scroll;
-
-  /* Pour masquer la barre de défilement sur Firefox */
-  scrollbar-width: none;
-
-  /* Pour masquer la barre de défilement sur WebKit (Chrome, Edge, Safari) */
-  -ms-overflow-style: none; /* Internet Explorer */
-}
-
-.timeline::-webkit-scrollbar {
-  display: none; /* WebKit */
+.petitRond {
+  margin: 10px;
+  width: 15px;
+  height: 15px; /* La hauteur doit être identique à la largeur */
+  border-radius: 50%; /* Cela rend le bord totalement arrondi */
+  background-color: gray;
 }

@@ -23,6 +23,7 @@ export function Estimation(props) {
     }, [])
     useEffect( () =>{
         setMonJalon(props.jalon)
+        getMesTaches(props.jalon);
     }, [props.jalon])
 
     useEffect( () =>{
@@ -49,7 +50,6 @@ export function Estimation(props) {
                 }
                 else{
                     setMesTaches(data) ;
-
                 }
             } catch (error) {
                 console.error("Erreur lors de la récupération des projets :", error);
@@ -72,7 +72,8 @@ export function Estimation(props) {
                 dureeTot += tache.charge
             });
 
-            const avanJalon = (contri / dureeTot) * 100
+            let avanJalon = (contri / dureeTot) * 100
+            avanJalon = parseFloat(avanJalon.toFixed(2));
             setTauxAvJalon(avanJalon)
 
         }else{
@@ -94,10 +95,6 @@ export function Estimation(props) {
     }, [mesTaches]);
 
     return (<>
-
-            <p >Responsable : {monJalon.nom} - {monJalon.trigramme}</p>
-
-            <p>sodijfgviodufhgv uzesf uhsifuhsd oqsiurdeu_s eyrd z_er ufàçzuràu zàe_rfys cxbxbchvj idufgh ç_eruft </p>
 
             <p> Avancement : </p>
             <div className="progress" role="progressbar" aria-label="Success example"

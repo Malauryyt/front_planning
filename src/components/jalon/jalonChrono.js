@@ -178,7 +178,9 @@ export function JalonChrono(props) {
                                                     </div>
 
 
+                                                    <p >Responsable : {jalon.nom} - {jalon.trigramme}</p>
 
+                                                    <p>sodijfgviodufhgv uzesf uhsifuhsd oqsiurdeu_s eyrd z_er ufàçzuràu zàe_rfys cxbxbchvj idufgh ç_eruft </p>
 
                                                     <Estimation jalon={jalon} projetEnCours={props.projetEnCours}/>
 
@@ -229,6 +231,9 @@ export function JalonChrono(props) {
                                                         <p className={jalon.etat === 2 ? "" : "d-none"} >Etat : Terminé <FontAwesomeIcon icon="fa-regular fa-circle-check" style={{color: "#00ff40",}} /></p>
                                                     </div>
 
+                                                    <p >Responsable : {jalon.nom} - {jalon.trigramme}</p>
+
+                                                    <p>sodijfgviodufhgv uzesf uhsifuhsd oqsiurdeu_s eyrd z_er ufàçzuràu zàe_rfys cxbxbchvj idufgh ç_eruft </p>
 
                                                     <Estimation jalon={jalon} projetEnCours={props.projetEnCours}/>
 
