@@ -7,7 +7,7 @@ import Connexion from "../components/connexion";
 import {ProjetRecap} from "./projetRecap";
 import {Jalon} from "./jalon.js";
 import {DetailPLanning} from "./detailPLanning.js";
-import {DetailJalon, InfoGlobalJalon, InfoJalon} from "./detailJalon";
+import {DetailJalon, InfoGlobalJalon, InfoJalon} from "./infoGlobalJalon";
 
 export default function Browser() {
 

@@ -163,7 +163,7 @@ export function JalonChrono(props) {
                                                     </h2>
                                                 </div>
                                                 <div className="body pointer"
-                                                onClick={() =>{ redirectToAboutPage()}}>
+                                                     onClick={() =>{ redirectToAboutPage(jalon.id_jalon)}}>
 
                                                     <div className={jalon.etat === 0 ? "d-flex justify-content-between" : "d-none"}>
                                                         <p >Etat : En attente <FontAwesomeIcon icon="fa-solid fa-clock" style={{color: "#808080",}} /></p>
@@ -215,7 +215,7 @@ export function JalonChrono(props) {
                                                     </h2>
                                                 </div>
                                                 <div className="body pointer"
-                                                     onClick={() =>{ redirectToAboutPage()}}>
+                                                     onClick={() =>{ redirectToAboutPage(jalon.id_jalon)}}>
 
                                                     <div className={jalon.etat === 0 ? "d-flex justify-content-between" : "d-none"}>
                                                         <p >Etat : En attente <FontAwesomeIcon icon="fa-solid fa-clock" style={{color: "#808080",}} /></p>

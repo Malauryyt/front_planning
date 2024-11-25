@@ -20,8 +20,11 @@ export function Estimation(props) {
 
     useEffect( () =>{
         setMonJalon(props.jalon)
-        console.log("mlon jallll",props.jalon)
     }, [])
+    useEffect( () =>{
+        setMonJalon(props.jalon)
+    }, [props.jalon])
+
     useEffect( () =>{
         getMesTaches(monJalon.id_jalon);
     }, [monJalon])
@@ -45,7 +48,6 @@ export function Estimation(props) {
                     setMesTaches([])
                 }
                 else{
-                    console.log("mes tacxhesss",data)
                     setMesTaches(data) ;
 
                 }

@@ -200,3 +200,18 @@ header {
 /* tache */
 /* ###################################################################################################################*/
 
+.timeline {
+  height: 300px;
+  width: 200px;
+  overflow-y: scroll;
+
+  /* Pour masquer la barre de défilement sur Firefox */
+  scrollbar-width: none;
+
+  /* Pour masquer la barre de défilement sur WebKit (Chrome, Edge, Safari) */
+  -ms-overflow-style: none; /* Internet Explorer */
+}
+
+.timeline::-webkit-scrollbar {
+  display: none; /* WebKit */
+}
