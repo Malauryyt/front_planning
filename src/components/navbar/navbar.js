@@ -105,13 +105,19 @@ function Navbar(props) {
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0 px-3">
                             <li className="nav-item">
+                                <a className="nav-link" href="/planning">Plannings</a>
+                            </li>
+                            <li className="nav-item">
                                 <a className="nav-link" href="/projet">Projets</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="/taches">Taches</a>
+                                <a className="nav-link" href="/detailPLanning">Jalons</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="/planning">Plannings</a>
+                                <a className="nav-link" href="/">Exigences</a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link" href="/">Taches</a>
                             </li>
 
                             <li className="projetEncours nav-item dropdown ">

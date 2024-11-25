@@ -1,3 +1,7 @@
+:root {
+  --colors: red, black, #ce43eb, #4d92eb, #e97f43, #43e99f, #e9436b;
+}
+
 header {
   height: 80px;
 }
@@ -13,6 +17,16 @@ header {
 
 .pointer:hover{
   cursor : pointer;
+}
+
+.cardJalon{
+  overflow: hidden;
+  overflow-wrap: break-word;
+}
+
+.body{
+  overflow: hidden;
+  width: 100%;
 }
 
 /* ###################################################################################################################*/
@@ -77,27 +91,70 @@ header {
   box-shadow: inset 0px 0px 0px 1px rgba(0,0,0,0.1);
   font-family: 'Ubuntu'; /*border-collapse: collapse;*/
   border-spacing: 0;
-  background-color: #333333;
+  background-color: #ffffff;
 
 }
 
-.planning th, td { border: 1px solid rgba(255,255,255,0.1); box-sizing: border-box; }
+.planning th, td {
+  border: 1px solid rgba(87, 80, 80, 0.1);
+  box-sizing: border-box;
+}
+.planning .day{
+  border: 1px solid rgba(87, 80, 80, 0.1);
+  box-sizing: border-box;
+}
 
-.planning th { text-transform: uppercase; font-size:10px; font-weight:700; padding: 10px 0; color: rgba(255,255,255,0.5); background-color: #292929; letter-spacing: 1px; }
+.planning th {
+  text-transform: uppercase;
+  font-size:10px;
+  font-weight:700;
+  padding: 10px 0;
+  color: rgb(10, 10, 10);
+  background-color: rgba(73, 71, 71, 0.25) !important;
+  letter-spacing: 1px; }
 
-.planning td { width: 14.285%; transition: all 0.3s; font-size: 14px; color: rgba(255,255,255,0.6); font-weight: 400; font-size: 14px; padding: 1.5% 1.5% 5%; vertical-align: initial; padding: 1.5% 0 ; height: 75px; }
+.planning td {
+  width: 14.285%;
+  transition: all 0.3s;
+  font-size: 14px;
+  color: rgb(10, 10, 10);
+  font-weight: 400;
+  font-size: 14px;
+  padding: 1.5% 1.5% 5%;
+  vertical-align: initial;
+  padding: 1.5% 0 ;
+  height: 75px;
+}
 
-.planning .day:hover { background-color: rgba(0,0,0,0.1); cursor:pointer; }
+.planning .day:hover {
+  background-color: rgba(0,0,0,0.1);
+  cursor:pointer; }
 
-.planning .today { color: #FFF; background-color: rgba(0,0,0,.25) !important; }
+.planning .today {
+  color: #FFF;
+  background-color: rgba(73, 71, 71, 0.25) !important; }
 
-.planning span.number { margin-left: 10% }
+.planning span.number {
+  margin-left: 10%
+}
 
-.planning span.event { height: 4px; background-color: rgba(0,0,0,.3); display: block; margin: 5px 10%; border-radius: 2px; background-color: #91c33b; }
+.planning span.event {
+  height: 4px;
+  background-color: rgba(0,0,0,.3);
+  display: block;
+  margin: 5px 10%;
+  border-radius: 2px;
+  background-color: #91c33b; }
 
-.planning span.event-multiday { margin: 5px -2px; border-radius: 0; }
-.planning span.event-multiday-start { margin-right: -4px;  }
-.planning span.event-multiday-finish { margin-left: -4px;  }
+.planning span.event-multiday {
+  margin: 5px -2px;
+  border-radius: 0; }
+.planning span.event-multiday-start {
+  margin-right: -4px;
+}
+.planning span.event-multiday-finish {
+  margin-left: -4px;
+}
 
 .planning span.event-ghost { background-color:transparent; }
 
@@ -137,4 +194,16 @@ header {
   white-space: nowrap; /* évite la coupure du texte */
   border-radius: inherit; /* suit les coins arrondis du conteneur */
   transition: width 0.6s ease; /* animation de progression */
+}
+
+/* ###################################################################################################################*/
+/* tache */
+/* ###################################################################################################################*/
+
+.petitRond {
+  margin: 10px;
+  width: 15px;
+  height: 15px; /* La hauteur doit être identique à la largeur */
+  border-radius: 50%; /* Cela rend le bord totalement arrondi */
+  background-color: gray;
 }

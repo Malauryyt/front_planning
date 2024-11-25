@@ -125,3 +125,32 @@ export async function modifJalon(id_jalon , libelle, date_liv_prev,date_com, id_
     }
 
 }
+
+export async function suppJalon(id_jalon  ) {
+    try{
+        return fetch(route +"jalon/supp", {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+
+                "id_jalon": id_jalon
+
+            })
+        })
+            // la on transforme en json
+            .then(
+                res =>{
+                    return res.status
+                }
+            )
+            .then(data => {
+                // console.log(data);
+                return data;
+            });
+        // ce then la return la reponse
+    }
+    catch(error){
+        return "j'ai une erreur" +  error
+    }
+
+}

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {creaPosteJalon, getJalons, getJalonById, modifJalon} from "../../model/jalon";
+import {creaPosteJalon, getJalons, getJalonById, modifJalon, suppJalon} from "../../model/jalon";
 import {getAllUser} from "../../model/user";
+import { useNavigate } from 'react-router-dom';
 
 function JalonCrud(props) {
 
@@ -241,7 +242,22 @@ function JalonCrud(props) {
     const modificationJalon = async () => {
         // console.log(inputPrixCrea + inputTypeCrea + inputQteCrea + inputResCrea)
 
-        if (libelleModif!= "" && couleurModif != "") {
+        // le jalon ne peut pas etre en cours ou terminé si le jalon d'avant ne l'ai pas
+
+        const tabJalon = props.jalons
+        const index = tabJalon.findIndex(jalon => jalon.id_jalon === monJalon[0].id_jalon);
+        if( index  !== 0 ){
+
+            const prece = tabJalon.find((jalon, i) => i === index - 1);
+            if(prece.etat != 2 && etatModif > 0 ){
+                setErrorModal("Le jalon ne peut pas être en cours ou commencer si le jalon précédent n'est pas terminé. Vérifiez l'état du jalon précédent.")
+                return;
+            }
+
+        }
+
+
+        if (libelleModif!= "" && couleurModif != "" ) {
 
             if(date_comModif != "" && new Date(date_comModif).getTime() > new Date(date_liv_prev).getTime()){
 
@@ -270,12 +286,58 @@ function JalonCrud(props) {
 
             }
         }
-
         else {
             setErrorModal("Vous devez remplir tous les champs.")
         }
 
+
     };
+
+    // *********************************************************************************
+    // Supression de jalon
+    // *********************************************************************************
+    //modification de mon jalon
+    const [supp, setSupp] = useState("non")
+    const validationSupp = () =>{
+        setSupp("oui")
+    }
+    const supressionJalon = async () => {
+
+        try {
+            const data = await suppJalon(monJalon[0].id_jalon);
+            if (data == "400") {
+                console.log("data/error : ", data.status);
+                setErrorModal("La modification n'a pas pu être effectuée correctement.")
+            }
+            else {
+
+                // Ferme la modal
+                var closeModalBtn = document.getElementById("btnclosemodalJalonModif");
+                closeModalBtn.click();
+                setErrorModal("");
+                setSupp("non")
+
+                props.setMettreAJour(!props.mettreAJour)
+
+            }
+        } catch (error) {
+            console.error("Erreur lors de la supression de jalon :", error);
+            setErrorModal("La modification n'a pas pu être effectuée correctement.")
+        }
+
+    };
+
+    // *********************************************************************************
+    // détails de jalon
+    // *********************************************************************************
+    const navigate = useNavigate();
+    const redirectToAboutPage = (id_jalon) => {
+        localStorage.setItem('idJalon', id_jalon);
+        var closeModalBtn = document.getElementById("btnclosemodalJalonModif");
+        closeModalBtn.click();
+        navigate('/InfoGlobalJalon');
+    };
+
 
 
         return (<>
@@ -421,13 +483,26 @@ function JalonCrud(props) {
 
                                 </div>
 
+                                <div className={supp === "oui" ? "alert alert-danger " : "d-none"} role="alert">
+                                    <p>Êtes-vous sûr de vouloir supprimer ce jalon ?</p>
+                                    <div className="modal-footer d-flex justify-content-center">
+
+                                        <button type="button" className="btn btn-secondary" onClick={() => {setSupp("non")}}>Non </button>
+                                        <button type="button" className="btn btn-success" onClick={() => {supressionJalon()}} >Oui </button>
+                                    </div>
+
+                                </div>
+
 
                             </div>
                             <div className="modal-footer d-flex justify-content-between">
-                                <div>
-                                    <button type="button" className={dateCommencement === "oui" || isLast === "oui" ? "btn btn-danger" : "d-none"} data-bs-dismiss="modal">Supprimer
-                                    </button>
-                                </div>
+
+                                <button type="button" className={dateCommencement === "oui" || isLast === "oui" ? "btn btn-danger" : "d-none"} onClick={validationSupp}>Supprimer
+                                </button>
+
+
+                                <button type="button" className="btn btn-secondary" onClick={() => {redirectToAboutPage(monJalon[0].id_jalon)}}>Détail</button>
+
                                 <button type="button" className="btn btn-primary" onClick={modificationJalon}>Modifier</button>
 
 
