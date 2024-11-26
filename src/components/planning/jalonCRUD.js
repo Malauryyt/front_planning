@@ -5,7 +5,7 @@ import {creaPosteJalon, getJalons, getJalonById, modifJalon, suppJalon} from "..
 import {getAllUser} from "../../model/user";
 import { useNavigate } from 'react-router-dom';
 
-function JalonCrud(props) {
+function TacheCrud(props) {
 
     var user = ""
     if (sessionStorage.getItem("user") != null) {
@@ -516,4 +516,4 @@ function JalonCrud(props) {
 
 }
 
-export default JalonCrud;
+export default TacheCrud;
