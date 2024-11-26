@@ -17,7 +17,7 @@ function TachePlanning(props) {
         setDateDuCalendrier(props.dateDuCalendrier);
     }, [props.dateDuCalendrier])
 
-    
+
 
 
     //récupération des taches du jalons
