@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from "../components/navbar/navbar.js";
-import Planning from "../components/planning/planning";
-import {DetailJalon} from "../components/jalon/detailsJalon";
-import {JalonChrono} from "../components/jalon/jalonChrono";
-import InfoJalon from "../components/planning/infoJalon";
 import TacheContainer from "../components/tache/tache_container";
 import {Estimation} from "../components/jalon/estimation";
 import {getJalonById} from "../model/jalon";
+import TacheCRUD from "../components/tache/tacheCRUD";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 export function InfoGlobalJalon(props) {
@@ -17,13 +15,15 @@ export function InfoGlobalJalon(props) {
 
     const [idJalon, setIdJalon] = useState(0)
     const [monJalon, setMonJalon] = useState([{"test" : "test"}])
+    const [maj, setMaj] = useState(true)
+    const [tacheModif, setTacheModif] = useState("")
+    const [tacheBloquer, setTacheBloquer] = useState(false)
 
     useEffect( ()=>{
 
         if(localStorage.getItem("idJalon") != null){
              const id_jalon = JSON.parse(localStorage.getItem("idJalon"))
             setIdJalon(id_jalon)
-
         }
 
     }, [])
@@ -34,8 +34,6 @@ export function InfoGlobalJalon(props) {
         getUnJalon(idJalon)
 
     }, [idJalon])
-
-
 
     // récupération d'un de mes jalon
     //récupération des jalons
@@ -66,24 +64,30 @@ export function InfoGlobalJalon(props) {
             <div className="conteneur container-xl taches ">
 
                 <h3> Avancement</h3>
-                <Estimation jalon={monJalon[0]} projetEnCours={props.projetEnCours}/>
+                date commencement : {monJalon[0].date_com_theorique}
+                date fin : {monJalon[0].date_liv_theorique}
+                <Estimation jalon={monJalon[0]} projetEnCours={props.projetEnCours} setMaj={setMaj} maj={maj}/>
 
                 <div className="d-flex">
 
                     <div className="col-6 m-3">
-                        <h3> Taches </h3>
-                        <TacheContainer jalon={idJalon}/>
+                        <div className="d-flex">
+                            <h3> Taches </h3>
+                            <FontAwesomeIcon icon="fa-solid fa-plus" style={{color: "#000000",}} className="m-2 pointer"  data-bs-toggle="modal" data-bs-target="#ajoutTache"/>
+                        </div>
+
+                        <TacheContainer jalon={idJalon} setMaj={setMaj} maj={maj} setTacheModif={setTacheModif} tacheModif={tacheModif} setTacheBloquer={setTacheBloquer}/>
                     </div>
                     <div className="col-6 m-3">
                         <h3> Exigences </h3>
-                        <TacheContainer jalon={idJalon}/>
+
                     </div>
                 </div>
 
 
-
             </div>
 
+            <TacheCRUD monJalon={monJalon[0]}  projetEnCours={props.projet} setMaj={setMaj} maj={maj} setTacheModif={setTacheModif} tacheModif={tacheModif} tacheBloquer={tacheBloquer}/>
 
         </>
     );

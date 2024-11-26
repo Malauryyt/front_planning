@@ -23,12 +23,12 @@ export function Estimation(props) {
     }, [])
     useEffect( () =>{
         setMonJalon(props.jalon)
-        getMesTaches(props.jalon);
-    }, [props.jalon])
+        getMesTaches(props.jalon.id_jalon);
+    }, [props.jalon, props.maj])
 
     useEffect( () =>{
         getMesTaches(monJalon.id_jalon);
-    }, [monJalon])
+    }, [monJalon, props.maj])
 
     useEffect(() =>{
         getTauxAv()

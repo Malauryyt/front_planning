@@ -14,18 +14,17 @@ function TacheContainer(props) {
     // récupération de mes jalons selon le projets choisis
     useEffect( () =>{
         getMesTaches(props.jalon);
-    }, [props.jalon])
+    }, [props.jalon, props.maj])
 
 
     //récupération des atches a chaque fois que c'est demandé
     useEffect( () =>{
         getMesTaches(props.jalon);
-    }, [majTache])
+    }, [majTache, props.maj])
 
     useEffect( () =>{
         modifTabTache();
     }, [mesTaches])
-
 
 
     //récupération des taches du jalons
@@ -71,7 +70,6 @@ function TacheContainer(props) {
 
         // Retourner ou utiliser tableauAvecStatus si besoin
         setMesTachesInfo(tableauAvecStatus) ;
-        console.log(tableauAvecStatus)
     }
 
 
@@ -97,7 +95,7 @@ function TacheContainer(props) {
                         }
                         return (
                             <>
-                                <TacheContainerMultiples taches={tache} couleur={couleur}/>
+                                <TacheContainerMultiples taches={tache} couleur={couleur} maj={props.maj} setTacheModif={props.setTacheModif} tacheModif={props.tacheModif} setTacheBloquer={props.setTacheBloquer}/>
                             </>
                         );
 

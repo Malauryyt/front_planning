@@ -16,12 +16,25 @@ function TacheContainerMultiples(props) {
         setMesTaches(props.taches);
         setCouleur(props.couleur);
 
-    }, [props.jalon])
+    }, [props.jalon, props.maj, props.taches])
 
 
 return (
         <>
-                <a href="#" className="list-group-item list-group-item-action">
+                <a href="#" className="list-group-item list-group-item-action"
+                   data-bs-toggle="modal" data-bs-target="#modifTache"
+                   onClick={()=> {
+                       props.setTacheModif(maTache.id);
+                       console.log("on regard", maTache.statusPrece)
+                       if (maTache.statusPrece === 100 || maTache.statusPrece=== "" ) {
+                           props.setTacheBloquer(false)
+                       }
+                       else{
+                           props.setTacheBloquer(true)
+                       }
+                   }
+
+                }>
                     <div className="d-flex">
                         <div className="petitRond "
                         style={{backgroundColor : couleur}}>
@@ -36,7 +49,7 @@ return (
                                     <FontAwesomeIcon icon="fa-solid fa-link" style={{color: "#000000",}} className={maTache.statusPrece === 100 ? "mt-1 ms-2": "d-none"}/>
 
                                 </div>
-                                <small className="text-body-secondary">{maTache.charge} jours + dans cmb de temps</small>
+                                <small className="text-body-secondary">{maTache.charge} jours </small>
                                
                             </div>
                             <small className="text-body-secondary">{maTache.description}</small>
