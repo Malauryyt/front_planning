@@ -329,7 +329,16 @@ function JalonCrud(props) {
 
     };
 
-
+    // *********************************************************************************
+    // détails de la tache > goto jalon
+    // *********************************************************************************
+    const navigate = useNavigate();
+    const redirectToAboutPage = (id_jalon) => {
+        localStorage.setItem('idJalon', id_jalon);
+        var closeModalBtn = document.getElementById("btnclosemodalTacheModif");
+        closeModalBtn.click();
+        navigate('/InfoGlobalJalon');
+    };
 
 
 
@@ -543,6 +552,8 @@ function JalonCrud(props) {
 
                             <button type="button" className="btn btn-danger" onClick={validationSupp}>Supprimer
                             </button>
+
+                            <button type="button" className="btn btn-secondary" onClick={() => {redirectToAboutPage(monJalon.id_jalon)}}>Détail</button>
 
                             <button type="button" className="btn btn-primary" onClick={() => {modificationTache()}}>Modifier</button>
 
