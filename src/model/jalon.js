@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import {route} from './route';
+import {getTachesByJalon} from "./tache";
 
 export async function getJalons(id_projet) {
     try {
@@ -151,6 +152,26 @@ export async function suppJalon(id_jalon  ) {
     }
     catch(error){
         return "j'ai une erreur" +  error
+    }
+
+}
+
+export async function getUnJalonRoutes( id_jalon) {
+
+    if (Number.isInteger(id_jalon) && id_jalon > 0) {
+        try {
+            const data = await getJalonById(id_jalon);
+            if (data == "400") {
+                console.log("data/error : ", data.status);
+                return [];
+            } else {
+                console.log("mon jalon", data)
+                return data;
+            }
+        } catch (error) {
+            console.error("Erreur lors de la récupération des projets :", error);
+            return []
+        }
     }
 
 }

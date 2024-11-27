@@ -117,7 +117,7 @@ function Navbar(props) {
                                 <a className="nav-link" href="/">Exigences</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="/">Taches</a>
+                                <a className="nav-link" href="/Tache">Taches</a>
                             </li>
 
                             <li className="projetEncours nav-item dropdown ">

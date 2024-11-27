@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {useNavigate} from "react-router-dom";
 import SpanCalendrier from "./spanCalendrier";
+import TacheCalendrier from "./tacheCalendrier";
 
 function Semaine(props) {
 
@@ -76,6 +77,7 @@ function Semaine(props) {
                 <span className="number"> {calendrier.Monday[props.index]} </span>
 
                 <SpanCalendrier jalons={jalons} dateDuCalendrier={dateDuCalendrier.Monday[props.index]} aujourdhui={aujourdhui} setJalonModif={props.setJalonModif}/>
+                <TacheCalendrier projetEnCours={props.projetEnCours} dateDuCalendrier={dateDuCalendrier.Monday[props.index]}/>
 
 
             </td>
@@ -84,6 +86,7 @@ function Semaine(props) {
                 <span className="number">{calendrier.Tuesday[props.index]}</span>
 
                 <SpanCalendrier jalons={jalons} dateDuCalendrier={dateDuCalendrier.Tuesday[props.index]} aujourdhui={aujourdhui} setJalonModif={props.setJalonModif}/>
+                <TacheCalendrier projetEnCours={props.projetEnCours} dateDuCalendrier={dateDuCalendrier.Tuesday[props.index]}/>
 
             </td>
             <td className={ new Date(aujourdhui).getTime() == new Date(dateDuCalendrier.Wednesday[props.index]).getTime() ? "day today" : "day "}
@@ -91,6 +94,7 @@ function Semaine(props) {
                 <span className="number"> {calendrier.Wednesday[props.index]}</span>
 
                 <SpanCalendrier jalons={jalons} dateDuCalendrier={dateDuCalendrier.Wednesday[props.index]} aujourdhui={aujourdhui} setJalonModif={props.setJalonModif} />
+                <TacheCalendrier projetEnCours={props.projetEnCours} dateDuCalendrier={dateDuCalendrier.Wednesday[props.index]}/>
 
             </td>
             <td className={ new Date(aujourdhui).getTime() == new Date(dateDuCalendrier.Thursday[props.index]).getTime() ? "day today" : "day "}
@@ -98,8 +102,7 @@ function Semaine(props) {
                 <span className="number"> {calendrier.Thursday[props.index]}</span>
 
                 <SpanCalendrier jalons={jalons} dateDuCalendrier={dateDuCalendrier.Thursday[props.index]} aujourdhui={aujourdhui} setJalonModif={props.setJalonModif} />
-
-
+                <TacheCalendrier projetEnCours={props.projetEnCours} dateDuCalendrier={dateDuCalendrier.Thursday[props.index]}/>
 
             </td>
             <td  className={ new Date(aujourdhui).getTime() == new Date(dateDuCalendrier.Friday[props.index]).getTime() ? "day today" : "day "}
@@ -107,6 +110,7 @@ function Semaine(props) {
                 <span className="number"> {calendrier.Friday[props.index]}</span>
 
                 <SpanCalendrier jalons={jalons} dateDuCalendrier={dateDuCalendrier.Friday[props.index]} aujourdhui={aujourdhui} setJalonModif={props.setJalonModif} />
+                <TacheCalendrier projetEnCours={props.projetEnCours} dateDuCalendrier={dateDuCalendrier.Friday[props.index]}/>
 
             </td>
             <td className={ new Date(aujourdhui).getTime() == new Date(dateDuCalendrier.Saturday[props.index]).getTime() ? "day today" : "day "}
@@ -114,6 +118,7 @@ function Semaine(props) {
                 <span className="number"> {calendrier.Saturday[props.index]}</span>
 
                 <SpanCalendrier jalons={jalons} dateDuCalendrier={dateDuCalendrier.Saturday[props.index]} aujourdhui={aujourdhui} setJalonModif={props.setJalonModif} />
+                <TacheCalendrier projetEnCours={props.projetEnCours} dateDuCalendrier={dateDuCalendrier.Saturday[props.index]}/>
 
             </td>
             <td className={ new Date(aujourdhui).getTime() == new Date(dateDuCalendrier.Sunday[props.index]).getTime() ? "day today" : "day "}
@@ -121,6 +126,7 @@ function Semaine(props) {
                     <span className="number"> {calendrier.Sunday[props.index]}</span>
 
                 <SpanCalendrier jalons={jalons} dateDuCalendrier={dateDuCalendrier.Sunday[props.index]} aujourdhui={aujourdhui} setJalonModif={props.setJalonModif} />
+                <TacheCalendrier projetEnCours={props.projetEnCours} dateDuCalendrier={dateDuCalendrier.Sunday[props.index]}/>
 
 
             </td>

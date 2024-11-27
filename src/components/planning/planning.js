@@ -162,7 +162,7 @@ function Planning(props) {
 
                             return (
                                 <>
-                                    <Semaine calendrier={calendrier} index={index} jalons={jalons} mois={mois} annee={annee} setDateAjout={setDateAjout} setJalonModif={setJalonModif} jalonModif={jalonModif}/>
+                                    <Semaine projetEnCours={props.projetEnCours} calendrier={calendrier} index={index} jalons={jalons} mois={mois} annee={annee} setDateAjout={setDateAjout} setJalonModif={setJalonModif} jalonModif={jalonModif}/>
                                 </>
                             )
                         }

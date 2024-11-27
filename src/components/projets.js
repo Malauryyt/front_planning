@@ -92,7 +92,7 @@ function Projets(props) {
                                         On met des trucs la blabla
                                     </div>
                                     <div className="d-flex flex-row-reverse">
-                                        <button type="button" className="btn btn-light" onClick={() => { getDetails(projet.id_projet) }}>Détails</button>
+                                        <button type="button" className="btn btn-light" onClick={() => { getDetails(projet.id_projet) }}>Jalons</button>
 
 
                                     </div>
@@ -124,7 +124,7 @@ function Projets(props) {
                                         On met des trucs la blabla
                                     </div>
                                     <div className="d-flex flex-row-reverse">
-                                        <button type="button" className="btn btn-light" onClick={() => { getDetails(projet.id_projet) }}>Détails</button>
+                                        <button type="button" className="btn btn-light" onClick={() => { getDetails(projet.id_projet) }}>Jalons</button>
 
 
                                     </div>

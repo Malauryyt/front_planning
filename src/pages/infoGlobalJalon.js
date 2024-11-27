@@ -63,15 +63,32 @@ export function InfoGlobalJalon(props) {
 
             <div className="conteneur container-xl taches ">
 
-                <h3> Avancement</h3>
-                date commencement : {monJalon[0].date_com_theorique}
-                date fin : {monJalon[0].date_liv_theorique}
-                <Estimation jalon={monJalon[0]} projetEnCours={props.projetEnCours} setMaj={setMaj} maj={maj}/>
+                <div ><h1 className="ms-2">{monJalon[0].libelle}</h1> </div>
+                <div className="m-3">
+                    <div className={monJalon[0].etat === 0 ? "d-flex justify-content-between" : "d-none"}>
+                        <p >Etat : En attente <FontAwesomeIcon icon="fa-solid fa-clock" style={{color: "#808080",}} /></p>
+                             </div>
+                    <div className={monJalon[0].etat === 1 ? "d-flex justify-content-between" : "d-none"}>
+                        <p className={monJalon[0].etat === 1 ? "" : "d-none"} >Etat : En cours <FontAwesomeIcon icon="fa-solid fa-calendar-check" style={{color: "#FFD43B",}} /></p>
+                             </div>
+                    <div className={monJalon[0].etat === 2 ? "d-flex justify-content-between" : "d-none"}>
+                        <p className={monJalon[0].etat === 2 ? "" : "d-none"} >Etat : Terminé <FontAwesomeIcon icon="fa-regular fa-circle-check" style={{color: "#00ff40",}} /></p>
+                    </div>
+
+                    <spanp>Date commencement : {monJalon[0].date_com_theorique}</spanp>
+                    <span className={monJalon[0].etat !== 2 ? "ms-3" : "d-none"}> Date de fin théorique : {monJalon[0].date_liv_theorique}</span>
+
+                </div>
+               <div className="m-3 ">
+                  <div> <h3> Avancement </h3></div>
+                   <div><Estimation jalon={monJalon[0]} projetEnCours={props.projetEnCours} setMaj={setMaj} maj={maj} pageInfo={"oui"}/></div>
+               </div>
+
 
                 <div className="d-flex">
 
                     <div className="col-6 m-3">
-                        <div className="d-flex">
+                        <div className="d-flex justify-content-between">
                             <h3> Taches </h3>
                             <FontAwesomeIcon icon="fa-solid fa-plus" style={{color: "#000000",}} className="m-2 pointer"  data-bs-toggle="modal" data-bs-target="#ajoutTache"/>
                         </div>

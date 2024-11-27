@@ -138,6 +138,7 @@ function TacheCrud(props) {
         getUnJalon()
         isFirst()
         islast()
+        setErrorModal("")
 
     }, [props.jalonModif])
 

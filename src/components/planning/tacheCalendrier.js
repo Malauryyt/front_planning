@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {useNavigate} from "react-router-dom";
+import {getTachesByProjet} from "../../model/tache";
+import {getJalons} from "../../model/jalon";
 
 function TacheCalendrier(props) {
 
@@ -9,123 +11,70 @@ function TacheCalendrier(props) {
         user = JSON.parse(sessionStorage.user);
     }
 
-    const [jalons, setJalons] = useState([])
     const[dateDuCalendrier, setDateDuCalendrier ] = useState("");
+    const[mesTaches, setMesTaches] = useState([]);
 
-    useEffect( ()=>{
-        setJalons(props.jalons);
-    }, [props.jalons])
     useEffect( ()=>{
         setDateDuCalendrier(props.dateDuCalendrier);
-    }, [props.dateDuCalendrier])
+        getTacheProjet(props.projetEnCours, user.id_user);
 
+    }, [props.dateDuCalendrier,props.projetEnCours ])
+
+
+    const getTacheProjet = async (projet, user) => {
+
+        if(props.projetEnCours != 0 ){
+
+            try {
+                const data = await getTachesByProjet(projet, user);
+                if(data == "400"){
+                    console.log("data/error : ", data.status);
+
+                }
+                else{
+                    console.log("mes taches :", data)
+                    setMesTaches(data) ;
+                }
+            } catch (error) {
+                console.error("Erreur lors de la récupération des projets :", error);
+            }
+        }
+        else{
+            setMesTaches([])
+        }
+
+
+    }
 
 
     return (<>
 
 
-            {jalons.length > 0 && jalons.map((jalon, cpt) => {
+            {mesTaches.length > 0 && mesTaches.map((tache, cpt) => {
 
 
-                var dateFinJalon =   jalon.date_liv_theorique;
-                var dateDebJalon = jalon.date_com_theorique ;
-                var dateAct = dateDuCalendrier;
+                if( new Date(tache.dateDebutTheorique).getTime() === new Date(props.dateDuCalendrier).getTime()){
+                    let couleur
+                    switch (tache.statut) {
+                        case 0:
+                            couleur = "black";
+                            break;
+                        case 50:
+                            couleur = "orange";
+                            break;
+                        case 100:
+                            couleur = "green";
+                            break;
+                    }
+                    return (
 
-                // Vérifier si la date du jalon est entre deux dates
-                var isBetween = false ;
-                if(new Date(dateAct).getTime() > new Date(dateDebJalon).getTime() &&
-                    new Date(dateAct).getTime() < new Date(dateFinJalon).getTime() ){
-                    isBetween = true ;
+                        <>
+                            <FontAwesomeIcon icon="fa-solid fa-thumbtack" style={{color: couleur,}} className="ms-1"/>
+
+                        </>
+                    )
                 }
 
-                var estDebut = false;
-                if(new Date(dateDebJalon).getTime() ===  new Date(dateAct).getTime()){
-                    estDebut = true;
-                }
-
-                var estFin = false
-                if( new Date(dateFinJalon).getTime() ===  new Date(dateAct).getTime()){
-                    estFin = true;
-                }
-
-                var estPasse = false
-                if( new Date(dateAct).getTime() < new Date(props.aujourdhui).getTime() ){
-                    estPasse = true
-                }
-
-                var projetDepasse = false
-                if(new Date(dateAct).getTime() === new Date(dateFinJalon).getTime()  && new Date(dateAct).getTime() <new Date(props.aujourdhui).getTime() && jalon.etat != 2){
-                    projetDepasse = true
-                }
-
-                var projetCourt = false
-                if( jalon.charge == 1 &&  new Date(dateAct).getTime() === new Date(dateFinJalon).getTime()){
-                    projetCourt = true
-                }
-
-                var projetCourt = false
-                if( jalon.charge == 1 &&  new Date(dateAct).getTime() === new Date(dateFinJalon).getTime()){
-                    projetCourt = true
-                }
-
-                var nomClasse = "jal" + jalon.id_jalon
-
-                return (
-
-                    <>
-                            <span className={isBetween && projetCourt === false ? `event event-multiday jal-${jalon.id_jalon}` : "d-none"}
-                                  onMouseOver={() => handleMouseOver(jalon.id_jalon)}
-                                  onMouseOut={() => handleMouseOut(jalon.id_jalon)}
-
-                                  style={{ transition: "box-shadow 0.3s ease",
-                                      backgroundColor: estPasse ? `${jalon.couleur}80` :  jalon.couleur,
-                                      marginLeft : "0px",
-                                      marginRight : "0px"}}
-
-                                  onClick={ () => {props.setJalonModif(jalon.id_jalon)}}
-                                  data-bs-toggle="modal" data-bs-target="#modifModal"
-
-                            ></span>
-                        <span className={estDebut === true && projetCourt === false ? `event event-multiday-start eventclass jal-${jalon.id_jalon}` : "d-none"}
-                              onMouseOver={() => handleMouseOver(jalon.id_jalon)}
-                              onMouseOut={() => handleMouseOut(jalon.id_jalon)}
-                              style={{ transition: "box-shadow 0.3s ease", backgroundColor: estPasse ? `${jalon.couleur}80` :  jalon.couleur,
-                                  borderTopRightRadius: "0px",
-                                  borderBottomRIghtRadius: "0px",
-                                  marginRight : "-1px"}}
-
-                              onClick={ () => {props.setJalonModif(jalon.id_jalon)}}
-                              data-bs-toggle="modal" data-bs-target="#modifModal"
-
-                        ></span>
-                        <span className={estFin === true && projetCourt === false ? `event event-multiday-finish eventclass jal-${jalon.id_jalon}` : "d-none"}
-                              onMouseOver={() => handleMouseOver(jalon.id_jalon)}
-                              onMouseOut={() => handleMouseOut(jalon.id_jalon)}
-                              style={{ transition: "box-shadow 0.3s ease", backgroundColor: estPasse ? `${jalon.couleur}80` :  jalon.couleur,
-                                  borderTopLeftRadius: "0px",
-                                  borderBottomLeftRadius: "0px",
-                                  marginLeft : "-1px"
-                              }}
-
-                              onClick={ () => {props.setJalonModif(jalon.id_jalon)}}
-                              data-bs-toggle="modal" data-bs-target="#modifModal">
-
-
-                            </span>
-                        <span className="event" className={projetCourt ? `event jal-${jalon.id_jalon}` : "d-none"}
-                              onMouseOver={() => handleMouseOver(jalon.id_jalon)}
-                              onMouseOut={() => handleMouseOut(jalon.id_jalon)}
-                              style={{ transition: "box-shadow 0.3s ease",backgroundColor: estPasse ? `${jalon.couleur}80` :  jalon.couleur}}
-
-                              onClick={ () => {props.setJalonModif(jalon.id_jalon)}}
-                              data-bs-toggle="modal" data-bs-target="#modifModal"
-                        ></span>
-
-                        <div className="d-flex justify-content-center">
-                            <FontAwesomeIcon icon="fa-solid fa-triangle-exclamation" beat style={{color: "#ff0000",}} className={projetDepasse && estFin? "" : "d-none"} /> </div>
-
-                    </>
-                )
 
             })}
 
@@ -136,6 +85,4 @@ function TacheCalendrier(props) {
 
 }
 
-
-
-export default SpanCalendrier;
+export default TacheCalendrier;

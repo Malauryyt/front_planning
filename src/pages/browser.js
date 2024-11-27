@@ -8,6 +8,7 @@ import {ProjetRecap} from "./projetRecap";
 import {Jalon} from "./jalon.js";
 import {DetailPLanning} from "./detailPLanning.js";
 import {DetailJalon, InfoGlobalJalon, InfoJalon} from "./infoGlobalJalon";
+import {Tache} from "./tache";
 
 export default function Browser() {
 
@@ -108,6 +109,7 @@ export default function Browser() {
                     <Route path='/planning' element={<Jalon user={user} setUser={initUser}  projet={projet} setProjet={initProjet} />} />
                     <Route path='/detailPLanning' element={<DetailPLanning user={user} setUser={initUser}  projet={projet} setProjet={initProjet} />} />
                     <Route path='/InfoGlobalJalon' element={<InfoGlobalJalon user={user} setUser={initUser}  projet={projet} setProjet={initProjet} />} />
+                    <Route path='/Tache' element={<Tache user={user} setUser={initUser}  projet={projet} setProjet={initProjet} />} />
 
                 </Routes>
             </BrowserRouter>

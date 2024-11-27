@@ -2,9 +2,62 @@ import React, { useState, useEffect } from 'react';
 import {route} from './route';
 
 export async function getTachesByJalon(id_jalon) {
-    console.log("mon id_jalon", id_jalon)
     try {
         return fetch(route +"tache/getTacheByJalon/" + id_jalon, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        })
+            // la on transforme en json
+            .then(
+                res => {
+                    if (res.status == "400") {
+                        return res.status
+                    } else {
+                        return res.json()
+                    }
+                }
+            )
+            .then(data => {
+                return data;
+            });
+        // ce then la return la reponse
+    }
+    catch (error) {
+        return "j'ai une erreur" + error
+    }
+
+}
+
+export async function getTachesByProjet(id_projet, id_user) {
+    try {
+        return fetch(route +"tache/getTacheByProjet/" + id_projet +"/" + id_user, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        })
+            // la on transforme en json
+            .then(
+                res => {
+                    if (res.status == "400") {
+                        return res.status
+                    } else {
+                        return res.json()
+                    }
+                }
+            )
+            .then(data => {
+                return data;
+            });
+        // ce then la return la reponse
+    }
+    catch (error) {
+        return "j'ai une erreur" + error
+    }
+
+}
+
+export async function getTachesMine( id_user) {
+    try {
+        return fetch(route +"tache/getTacheMine/" +  id_user, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         })
@@ -132,4 +185,27 @@ export async function creaTache( libelle, description, operation,dateDeb, charge
         return "j'ai une erreur" +  error
     }
 
+}
+
+
+//récupération des taches du jalons
+export async function getMesTachesRoutes( id_jalon) {
+
+    //if(props.jalonModif != "" ){
+    if(id_jalon != "" && id_jalon != null){
+
+        try {
+            const data = await getTachesByJalon(id_jalon);
+            if(data == "400"){
+                console.log("data/error : ", data.status);
+                return []
+            }
+            else{
+                return data
+            }
+        } catch (error) {
+            console.error("Erreur lors de la récupération des projets :", error);
+            return []
+        }
+    }
 }
